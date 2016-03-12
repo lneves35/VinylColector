@@ -5,15 +5,15 @@ using PandyIT.VinylOrganizer.DAL.Model.Interfaces;
 
 namespace PandyIT.VinylOrganizer.DAL.Model
 {
-    public class VinylOrganizerContext : DbContext
+    public class VinylOrganizerDbContext : DbContext
     {
-        public VinylOrganizerContext(string connectionString, IVinylOrganizerSeeder seeder)
+        public VinylOrganizerDbContext(string connectionString, IVinylOrganizerSeeder seeder)
             : base(connectionString)
         {
             Database.SetInitializer(new VinylOrganizerInitializer(seeder));
         }
 
-        protected VinylOrganizerContext(string connectionString)
+        public VinylOrganizerDbContext(string connectionString)
             : base(connectionString)
         {
 

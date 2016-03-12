@@ -4,7 +4,7 @@ using PandyIT.VinylOrganizer.DAL.Model.Interfaces;
 
 namespace PandyIT.VinylOrganizer.DAL.Model
 {
-    public class VinylOrganizerInitializer : CreateDatabaseIfNotExists<VinylOrganizerContext>
+    public class VinylOrganizerInitializer : CreateDatabaseIfNotExists<VinylOrganizerDbContext>
     {
         private IVinylOrganizerSeeder Seeder { get; set; }
 
@@ -18,10 +18,10 @@ namespace PandyIT.VinylOrganizer.DAL.Model
             Seeder = seeder;
         }
 
-        protected override void Seed(VinylOrganizerContext context)
+        protected override void Seed(VinylOrganizerDbContext dbContext)
         {
-            base.Seed(context);
-            Seeder.Seed(context);
+            base.Seed(dbContext);
+            Seeder.Seed(dbContext);
         }
     }
 }

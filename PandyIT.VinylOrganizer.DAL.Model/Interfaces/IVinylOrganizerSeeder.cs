@@ -2,6 +2,6 @@
 {
     public interface IVinylOrganizerSeeder
     {
-        void Seed(VinylOrganizerContext ctx);
+        void Seed(VinylOrganizerDbContext ctx);
     }
 }
