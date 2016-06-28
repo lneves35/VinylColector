@@ -14,7 +14,8 @@ namespace PandyIT.VinylOrganizer.DAL.Model.Entities
 
         [Required]
         [Index("IX_NameAndParent", 1, IsUnique = true)]
-        public String UniqueName { get; set; }
+        [MaxLength(50)]
+        public string Name { get; set; }
 
         [ForeignKey("ParentLocation")]
         [Index("IX_NameAndParent", 2, IsUnique = true)]

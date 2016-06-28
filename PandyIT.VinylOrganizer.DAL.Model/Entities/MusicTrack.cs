@@ -19,6 +19,6 @@ namespace PandyIT.VinylOrganizer.DAL.Model.Entities
 
         public byte? Rating { get; set; }                
 
-        public virtual ICollection<MusicTrackLocation> MusicTrackInstances { get; set; }
+        public virtual ICollection<MusicTrackInstance> MusicTrackInstances { get; set; }
     }
 }

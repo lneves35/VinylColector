@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PandyIT.VinylOrganizer.DAL.Model.Entities
 {
-    public class MusicTrackLocation
+    public class MusicTrackInstance
     {
         public int MusicTrackInstanceId { get; set; }
 

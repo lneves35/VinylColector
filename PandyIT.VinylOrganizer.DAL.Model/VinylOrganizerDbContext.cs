@@ -26,7 +26,7 @@ namespace PandyIT.VinylOrganizer.DAL.Model
         }
 
         public DbSet<MusicTrack> MusicTracks { get; set; }
-        public DbSet<MusicTrackLocation> MusicTrackLocations { get; set; }
+        public DbSet<MusicTrackInstance> MusicTrackLocations { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<Inches> Inches { get; set; }
     }

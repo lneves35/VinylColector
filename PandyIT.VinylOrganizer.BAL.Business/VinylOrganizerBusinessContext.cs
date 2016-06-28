@@ -6,7 +6,7 @@ namespace PandyIT.VinylOrganizer.BAL.Business
 {
     public class VinylOrganizerBusinessContext : IVinylOrganizerBusinessContext
     {
-        private IUnitOfWork vinylOrganizer;
+        private readonly IUnitOfWork unitOfWork;
 
         public VinylOrganizerBusinessContext(IUnitOfWork recordCaseUnitOfWork)
         {
@@ -15,12 +15,12 @@ namespace PandyIT.VinylOrganizer.BAL.Business
                 throw new ArgumentNullException(nameof(recordCaseUnitOfWork));
             }
 
-            this.vinylOrganizer = recordCaseUnitOfWork;
+            this.unitOfWork = recordCaseUnitOfWork;
         }
 
         public void AddMusicTrack(MusicTrack musicTrack)
         {
-            this.vinylOrganizer.GetRepository<MusicTrack>().Add(musicTrack);
+            this.unitOfWork.GetRepository<MusicTrack>().Add(musicTrack);
         }
     }
 }
