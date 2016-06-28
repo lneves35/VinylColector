@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PandyIT.VinylOrganizer.ConsoleTests", "PandyIT.VinylOrganizer.ConsoleTests\PandyIT.VinylOrganizer.ConsoleTests.csproj", "{B1CFD40A-AD6D-4429-8D17-DB82C1FFF16D}"
 EndProject
@@ -10,6 +10,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PandyIT.Core", "PandyIT.Core\PandyIT.Core.csproj", "{B761C3C5-FC5D-476E-A926-3EBB5712FE04}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PandyIT.VinylOrganizer.BAL.Business", "PandyIT.VinylOrganizer.BAL.Business\PandyIT.VinylOrganizer.BAL.Business.csproj", "{1C632E3E-FC0E-4BAF-89D3-48E06062C2D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PandyIT.VinylOrganizer.Discogs", "PandyIT.VinylOrganizer.Discogs\PandyIT.VinylOrganizer.Discogs.csproj", "{0E732391-1376-4263-AC74-36C529BD3365}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PandyIt.Labels", "PandyIt.Labels\PandyIt.Labels.csproj", "{D6F54799-955E-4C61-ABEB-894B783B677D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,14 @@ Global
 		{1C632E3E-FC0E-4BAF-89D3-48E06062C2D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C632E3E-FC0E-4BAF-89D3-48E06062C2D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C632E3E-FC0E-4BAF-89D3-48E06062C2D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E732391-1376-4263-AC74-36C529BD3365}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E732391-1376-4263-AC74-36C529BD3365}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E732391-1376-4263-AC74-36C529BD3365}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E732391-1376-4263-AC74-36C529BD3365}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6F54799-955E-4C61-ABEB-894B783B677D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6F54799-955E-4C61-ABEB-894B783B677D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6F54799-955E-4C61-ABEB-894B783B677D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6F54799-955E-4C61-ABEB-894B783B677D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

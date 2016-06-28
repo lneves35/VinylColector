@@ -7,6 +7,8 @@ namespace PandyIT.VinylOrganizer.DAL.Model
 {
     public class VinylOrganizerDbContext : DbContext
     {
+        public VinylOrganizerDbContext() { }
+
         public VinylOrganizerDbContext(string connectionString, IVinylOrganizerSeeder seeder)
             : base(connectionString)
         {

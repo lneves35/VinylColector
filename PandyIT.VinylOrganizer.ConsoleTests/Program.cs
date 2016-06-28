@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using PandyIt.Labels;
 using PandyIT.Core.Repository;
 using PandyIT.VinylOrganizer.BAL.Business;
 using PandyIT.VinylOrganizer.DAL.Model;
@@ -19,26 +20,30 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
     {
         private static void Main(string[] args)
         {
-            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder()
+            //AddVinyls();
+
+            var printer = new LabelPrinter();
+            printer.Print();
+        }
+
+        private static void AddVinyls()
+        {
+            var builder = new SqlConnectionStringBuilder()
             {
                 InitialCatalog = "teste",
                 DataSource = "(local)",
                 IntegratedSecurity = true
-            };           
+            };
 
-            var ctx = new VinylOrganizerDbContext(builder.ToString());
+            var ctx = new VinylOrganizerDbContext(builder.ToString(), VinylOrganizerSeeder.GetSeeder());
 
             using (var uow = new UnitOfWork(ctx))
             {
                 var businessCtx = new VinylOrganizerBusinessContext(uow);
 
-                var music = new MusicTrack()
-                {
-                    Artist = "ola",
-                    Title = "mundo"
-                };
 
-                businessCtx.AddMusicTrack(music);
+                businessCtx.AddVinyl(8633490);
+                businessCtx.AddVinyl(8616691);
             }
         }
     }
