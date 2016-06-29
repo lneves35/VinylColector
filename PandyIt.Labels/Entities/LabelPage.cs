@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.Linq;
 using PandyIT.VinylOrganizer.DAL.Model.Entities;
 
@@ -41,12 +42,15 @@ namespace PandyIt.VinylOrganizer.Labels.Entities
             return labelSlots.First(ls => ls.LocationVinyl == null);
         }
 
-        public void Draw(Graphics graphics)
+        public void Print(PrintPageEventArgs ev)
         {
+            var width = ev.PageSettings.PaperSize.Width / this.columns;
+            var height = ev.PageSettings.PaperSize.Height / this.rows;
+
             labelSlots
                 .Where(ls => ls.LocationVinyl != null)
                 .ToList()
-                .ForEach(ls => ls.Draw(graphics));
+                .ForEach(ls => ls.Draw(ev.Graphics, width, height));
         }
     }
 }

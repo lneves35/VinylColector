@@ -12,12 +12,19 @@ namespace PandyIT.VinylOrganizer.DAL.Model.Entities
     [Table("LocationVinyl")]
     public class LocationVinyl : Location
     {   
-        public string Ref { get; set; }
+        public string Title { get; set; }
 
         public int? InchesId { get; set; }
 
         public Inches Inches { get; set; }
 
-        public DateTime? ReleaseDate { get; set; }
+        public short? Year { get; set; }
+
+        public byte? Month { get; set; }
+
+        public byte? Day { get; set; }
+
+        public string Genre { get; set; }
+
     }
 }

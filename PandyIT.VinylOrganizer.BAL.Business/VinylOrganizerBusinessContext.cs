@@ -31,30 +31,40 @@ namespace PandyIT.VinylOrganizer.BAL.Business
             var discogs = new Discogs3("wTIlBQlrElaTrepxOBIw");
             var release = discogs.GetRelease(id);
 
-            var releaseDate = Convert.ToDateTime(release.ReleaseDate);
+
+            var releaseDate = release.ReleaseDate.Split('-');
+            var year = releaseDate[0].Length > 0 ? (short?)Convert.ToInt16(releaseDate[0]) : null;
+            var month = releaseDate.Length > 1 ? (byte?)Convert.ToByte(releaseDate[1]) : null;
+            var day = releaseDate.Length > 2 ? (byte?)Convert.ToByte(releaseDate[2]) : null;
+
 
             var vinyl = new LocationVinyl
             {
-                Name =  (release.Artists.First().Name + " - " + release.Title),
-                ReleaseDate = releaseDate,
-                Ref = GetVinylRef(releaseDate)
+                Title =  (release.Artists.First().Name + " - " + release.Title),
+                Year = year,
+                Month = month,
+                Day = day,
+                Name = year.HasValue ? GetVinylLocationName(year.Value) : "#undefined",
+                Genre = release.Genres.First()
             };
 
             this.unitOfWork.GetRepository<LocationVinyl>().Add(vinyl);
         }
+
+        
 
         public IEnumerable<LocationVinyl> GetAllLocationVinyl()
         {
             return this.unitOfWork.GetRepository<LocationVinyl>().Find(v => true);
         }
 
-        public string GetVinylRef(DateTime date)
+        public string GetVinylLocationName(short year)
         {
             var curMax = this.unitOfWork.GetRepository<LocationVinyl>()
-                .Find(lv => lv.ReleaseDate.HasValue && lv.ReleaseDate.Value.Year == date.Year)
+                .Find(lv => lv.Year.HasValue && lv.Year.Value == year)
                 .Count();
 
-            return "#" + date.Year + "-" + (curMax + 1).ToString().PadLeft(4, '0');
+            return "#" + year + "-" + (curMax + 1).ToString().PadLeft(4, '0');
         }
     }
 }

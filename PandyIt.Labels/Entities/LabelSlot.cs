@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Drawing.Printing;
 using PandyIT.VinylOrganizer.DAL.Model.Entities;
 
 namespace PandyIt.VinylOrganizer.Labels.Entities
@@ -8,6 +9,10 @@ namespace PandyIt.VinylOrganizer.Labels.Entities
         public int Row { get; set; }
 
         public int Column { get; set; }
+
+        public int Width { get; set; }
+
+        public int Height { get; set; }
 
         public LocationVinyl LocationVinyl { get; set; }
 
@@ -22,14 +27,26 @@ namespace PandyIt.VinylOrganizer.Labels.Entities
         {
         }
 
-        public void Draw(Graphics graphics)
+        public void Draw(Graphics graphics, int width, int heigth)
         {
             using (var pen = new Pen(Color.Black))
             {
-                var rectangle = new Rectangle(this.Column * 10, this.Row * 10, 50, 50);
-                graphics.DrawRectangle(pen, rectangle);
-            }
-        }
+                var x = this.Column*width;
+                var y = this.Row*heigth;
 
+                var rectangle = new Rectangle(x, y, width, heigth);
+                graphics.DrawRectangle(pen, rectangle);
+
+                var fontFamily = new FontFamily("Times New Roman");
+                var font = new Font(fontFamily, 24, FontStyle.Regular, GraphicsUnit.Pixel);
+                var solidBrush = new SolidBrush(Color.Black);
+
+                graphics.DrawString(this.LocationVinyl.Name, font, solidBrush, new PointF(x, y));
+
+                graphics.DrawString(this.LocationVinyl.Title, font, solidBrush, new PointF(x, y + 30));
+
+                graphics.DrawString(this.LocationVinyl.Genre, font, solidBrush, new PointF(x, y + 120));
+            }
+        }        
     }
 }

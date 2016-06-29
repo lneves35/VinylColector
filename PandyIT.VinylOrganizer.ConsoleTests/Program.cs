@@ -45,6 +45,14 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
         {
             businessCtx.AddVinyl(8633490);
             businessCtx.AddVinyl(8616691);
+            businessCtx.AddVinyl(6609001);
+            businessCtx.AddVinyl(4242198);
+            businessCtx.AddVinyl(5003156);
+            businessCtx.AddVinyl(2988525);
+            businessCtx.AddVinyl(7379633);
+            businessCtx.AddVinyl(8062138);
+            businessCtx.AddVinyl(8501806);
+            businessCtx.AddVinyl(6945937);
         }
     }
 }
