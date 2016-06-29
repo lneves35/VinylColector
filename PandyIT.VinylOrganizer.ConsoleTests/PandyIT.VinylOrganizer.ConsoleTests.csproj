@@ -80,9 +80,9 @@
       <Project>{b761c3c5-fc5d-476e-a926-3ebb5712fe04}</Project>
       <Name>PandyIT.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PandyIt.Labels\PandyIt.Labels.csproj">
+    <ProjectReference Include="..\PandyIt.Labels\PandyIt.VinylOrganizer.Labels.csproj">
       <Project>{D6F54799-955E-4C61-ABEB-894B783B677D}</Project>
-      <Name>PandyIt.Labels</Name>
+      <Name>PandyIt.VinylOrganizer.Labels</Name>
     </ProjectReference>
     <ProjectReference Include="..\PandyIT.VinylOrganizer.BAL.Business\PandyIT.VinylOrganizer.BAL.Business.csproj">
       <Project>{1c632e3e-fc0e-4baf-89d3-48e06062c2d2}</Project>

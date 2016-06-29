@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using DiscogsNet.Api;
 using PandyIT.Core.Repository;
@@ -42,13 +43,18 @@ namespace PandyIT.VinylOrganizer.BAL.Business
             this.unitOfWork.GetRepository<LocationVinyl>().Add(vinyl);
         }
 
+        public IEnumerable<LocationVinyl> GetAllLocationVinyl()
+        {
+            return this.unitOfWork.GetRepository<LocationVinyl>().Find(v => true);
+        }
+
         public string GetVinylRef(DateTime date)
         {
             var curMax = this.unitOfWork.GetRepository<LocationVinyl>()
                 .Find(lv => lv.ReleaseDate.HasValue && lv.ReleaseDate.Value.Year == date.Year)
                 .Count();
 
-            return "#" + date.Year.ToString() + "-" + (curMax + 1).ToString().PadLeft(4, '0');
+            return "#" + date.Year + "-" + (curMax + 1).ToString().PadLeft(4, '0');
         }
     }
 }

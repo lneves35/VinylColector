@@ -7,8 +7,8 @@
     <ProjectGuid>{D6F54799-955E-4C61-ABEB-894B783B677D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PandyIt.Labels</RootNamespace>
-    <AssemblyName>PandyIt.Labels</AssemblyName>
+    <RootNamespace>PandyIt.VinylOrganizer.Labels</RootNamespace>
+    <AssemblyName>PandyIt.VinylOrganizer.Labels</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -41,11 +41,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\LabelPage.cs" />
+    <Compile Include="Entities\LabelSlot.cs" />
     <Compile Include="LabelPrinter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Entities\" />
+    <ProjectReference Include="..\PandyIT.VinylOrganizer.DAL.Model\PandyIT.VinylOrganizer.DAL.Model.csproj">
+      <Project>{A6BEFC89-5AD2-4517-A759-8C1C3E13E574}</Project>
+      <Name>PandyIT.VinylOrganizer.DAL.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

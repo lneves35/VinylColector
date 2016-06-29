@@ -5,11 +5,19 @@ using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PandyIt.VinylOrganizer.Labels.Entities;
 
-namespace PandyIt.Labels
+namespace PandyIt.VinylOrganizer.Labels
 {
     public class LabelPrinter
     {
+        private readonly LabelPage page;
+
+        public LabelPrinter(LabelPage page)
+        {
+            this.page = page;
+        }
+
         public void Print()
         {
             var pdfPrinter = PrinterSettings.InstalledPrinters.Cast<string>().First(p => p.ToLower().Contains("pdf"));
@@ -27,18 +35,9 @@ namespace PandyIt.Labels
         }
 
         private void pd_PrintPage(object sender, PrintPageEventArgs ev)
-        {
-            string stringToPrint = "SOME TEXT TO PRINT";
-
-            // Create font and brush.
-            Font drawFont = new Font("Arial", 16);
-            SolidBrush drawBrush = new SolidBrush(System.Drawing.Color.Black);
-
-            System.Drawing.Point pos = new System.Drawing.Point(100, 100);
-
-            ev.Graphics.DrawString(stringToPrint, drawFont, drawBrush, pos);
-
+        {     
+            this.page.Draw(ev.Graphics);                   
             ev.HasMorePages = false;
-        }
+        }        
     }
 }

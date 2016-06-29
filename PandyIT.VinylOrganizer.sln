@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PandyIT.VinylOrganizer.BAL.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PandyIT.VinylOrganizer.Discogs", "PandyIT.VinylOrganizer.Discogs\PandyIT.VinylOrganizer.Discogs.csproj", "{0E732391-1376-4263-AC74-36C529BD3365}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PandyIt.Labels", "PandyIt.Labels\PandyIt.Labels.csproj", "{D6F54799-955E-4C61-ABEB-894B783B677D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PandyIt.VinylOrganizer.Labels", "PandyIt.Labels\PandyIt.VinylOrganizer.Labels.csproj", "{D6F54799-955E-4C61-ABEB-894B783B677D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
