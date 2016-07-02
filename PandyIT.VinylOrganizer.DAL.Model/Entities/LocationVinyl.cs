@@ -26,5 +26,7 @@ namespace PandyIT.VinylOrganizer.DAL.Model.Entities
 
         public string Genre { get; set; }
 
+        public int? DiscogsId { get; set; }
+
     }
 }

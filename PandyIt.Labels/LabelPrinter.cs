@@ -15,7 +15,7 @@ namespace PandyIt.VinylOrganizer.Labels
 
         public void Print()
         {
-            var pdfPrinter = PrinterSettings.InstalledPrinters.Cast<string>().First(p => p.ToLower().Contains("4500"));
+            var pdfPrinter = PrinterSettings.InstalledPrinters.Cast<string>().First(p => p.ToLower().Contains("pdf"));
 
             var printDocument = new PrintDocument
             {

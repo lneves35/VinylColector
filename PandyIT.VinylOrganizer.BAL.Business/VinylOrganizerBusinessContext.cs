@@ -45,7 +45,8 @@ namespace PandyIT.VinylOrganizer.BAL.Business
                 Month = month,
                 Day = day,
                 Name = year.HasValue ? GetVinylLocationName(year.Value) : "#undefined",
-                Genre = release.Genres.First()
+                Genre = release.Genres.First(),
+                DiscogsId = id
             };
 
             this.unitOfWork.GetRepository<LocationVinyl>().Add(vinyl);
