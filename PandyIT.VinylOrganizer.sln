@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PandyIT.VinylOrganizer.Disc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PandyIt.VinylOrganizer.Labels", "PandyIt.Labels\PandyIt.VinylOrganizer.Labels.csproj", "{D6F54799-955E-4C61-ABEB-894B783B677D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PandyIT.VinylOrganizer.UI.WPF", "PandyIT.VinylOrganizer.UI.WPF\PandyIT.VinylOrganizer.UI.WPF.csproj", "{EC628E30-D92D-46A4-BA80-ADC3AD9C343E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PandyIT.Core.WPF", "PandyIT.Core.WPF\PandyIT.Core.WPF.csproj", "{F8942031-2C7A-4134-9DD9-A4F4B17D7843}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +49,14 @@ Global
 		{D6F54799-955E-4C61-ABEB-894B783B677D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6F54799-955E-4C61-ABEB-894B783B677D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6F54799-955E-4C61-ABEB-894B783B677D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC628E30-D92D-46A4-BA80-ADC3AD9C343E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC628E30-D92D-46A4-BA80-ADC3AD9C343E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC628E30-D92D-46A4-BA80-ADC3AD9C343E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC628E30-D92D-46A4-BA80-ADC3AD9C343E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8942031-2C7A-4134-9DD9-A4F4B17D7843}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8942031-2C7A-4134-9DD9-A4F4B17D7843}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8942031-2C7A-4134-9DD9-A4F4B17D7843}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8942031-2C7A-4134-9DD9-A4F4B17D7843}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
