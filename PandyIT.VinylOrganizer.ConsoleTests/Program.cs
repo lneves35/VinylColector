@@ -1,10 +1,12 @@
-﻿using System.Data.SqlClient;
+﻿using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using PandyIt.VinylOrganizer.Labels;
 using PandyIt.VinylOrganizer.Labels.Entities;
 using PandyIT.Core.Repository;
 using PandyIT.VinylOrganizer.BAL.Business;
 using PandyIT.VinylOrganizer.DAL.Model;
+using System.Diagnostics;
 
 namespace PandyIT.VinylOrganizer.ConsoleTests
 {
@@ -25,39 +27,39 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
                 var businessCtx = new VinylOrganizerBusinessContext(uow);
 
                 AddVinyls(businessCtx);
-                //PrintLabels(businessCtx);
+                PrintLabels(businessCtx);
             }
         }
 
         private static void PrintLabels(VinylOrganizerBusinessContext businessCtx)
         {
-            var labelPage = new LabelPage(5, 2);
-            var printer = new LabelPrinter(labelPage);
-
+            LabelPage labelPage = new LabelPage(5,2,827,1169);
+            
 
             var discogsIdsToPrint = new[]
             {
-                7741760,
-                2766862,
-                6601399,
-                4471236,
-                8186293,
-                4242198,
-                7418415,
-                6609001,
-                3018053,
-                7379633,
                 8501806,
                 2988525,
                 5003156,
-                8062138
-            };  
+                8062138,
+                //7750876,
+                6945937,
+                5861692
+            };
 
-            //foreach (var locationVinyl in businessCtx.GetAllLocationVinyl())
-            //{
-            //    labelPage.AddLabel(locationVinyl);
-            //}
+            int i = 0;
+            foreach (var discogsId in discogsIdsToPrint)
+            {
+                var column = i % 2;
+                var row = i / 2;
 
+                var vinyl = businessCtx.FetchVinylByDiscogsId(discogsId);
+                labelPage.AddLabel(row, column, vinyl);
+                i++;
+            }
+
+            var labelPages = new LabelPage[] { labelPage };
+            var printer = new LabelPrinter(labelPages);
             printer.Print();
         }
 
@@ -156,7 +158,8 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
                 3018053,
                 2988525,
                 5003156,
-                
+                6945937,
+                5861692
             };
 
             discogsIds.ToList().ForEach(businessCtx.AddVinyl);

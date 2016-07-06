@@ -52,11 +52,17 @@ namespace PandyIT.VinylOrganizer.BAL.Business
             this.unitOfWork.GetRepository<LocationVinyl>().Add(vinyl);
         }
 
-        
+        public LocationVinyl FetchVinylByDiscogsId(int id)
+        {
+            return this.unitOfWork.GetRepository<LocationVinyl>()
+                .Find(lv => lv.DiscogsId == id)
+                .Single();
+        }
 
         public IEnumerable<LocationVinyl> GetAllLocationVinyl()
         {
-            return this.unitOfWork.GetRepository<LocationVinyl>().Find(v => true);
+            return this.unitOfWork.GetRepository<LocationVinyl>()
+                .Find(v => true);
         }
 
         public string GetVinylLocationName(short year)

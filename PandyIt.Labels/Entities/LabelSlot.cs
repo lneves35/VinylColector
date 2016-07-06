@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Diagnostics;
+using System.Drawing;
 using System.Drawing.Printing;
 using PandyIT.VinylOrganizer.DAL.Model.Entities;
 
@@ -10,43 +11,69 @@ namespace PandyIt.VinylOrganizer.Labels.Entities
 
         public int Column { get; set; }
 
-        public int Width { get; set; }
+        LabelContent labelContent { get; set; }
 
-        public int Height { get; set; }
+        public LabelPage Page { get; set; }                
 
-        public LocationVinyl LocationVinyl { get; set; }
-
-        public LabelSlot(int row, int column, LocationVinyl locationViny)
+        public LabelSlot(LabelPage page, LocationVinyl locationVinyl, int row, int column)
         {
             this.Row = row;
             this.Column = column;
-            this.LocationVinyl = locationViny;
+            this.Page = page;
+            this.labelContent = new LabelContent(this, locationVinyl);
         }
 
-        public LabelSlot(int row, int column) : this(row, column, null)
+        public void Draw(Graphics graphics)
         {
+            //using (var pen = new Pen(Color.Black))
+            //{
+            //    var rectangle = new Rectangle(GetAvailableX(), GetAvailableY(), GetAvailableWidth(), GetAvailableHeigth());
+            //    graphics.DrawRectangle(pen, rectangle);
+            //}
+
+            labelContent.Draw(graphics);
         }
 
-        public void Draw(Graphics graphics, int width, int heigth)
+        public int GetAvailableX()
         {
-            using (var pen = new Pen(Color.Black))
-            {
-                var x = this.Column*width;
-                var y = this.Row*heigth;
+            return GetX() + 2;
+        }
 
-                var rectangle = new Rectangle(x, y, width, heigth);
-                graphics.DrawRectangle(pen, rectangle);
+        public int GetAvailableY()
+        {
+            return GetY() + 2;
+        }
 
-                var fontFamily = new FontFamily("Times New Roman");
-                var font = new Font(fontFamily, 24, FontStyle.Regular, GraphicsUnit.Pixel);
-                var solidBrush = new SolidBrush(Color.Black);
 
-                graphics.DrawString(this.LocationVinyl.Name, font, solidBrush, new PointF(x, y));
+        public int GetAvailableWidth()
+        {
+            return GetWidth() - 3;
+        }
 
-                graphics.DrawString(this.LocationVinyl.Title, font, solidBrush, new PointF(x, y + 30));
+        public int GetAvailableHeigth()
+        {
+            return GetHeigth();
+        }
 
-                graphics.DrawString(this.LocationVinyl.Genre, font, solidBrush, new PointF(x, y + 120));
-            }
-        }        
+        
+        private int GetX()
+        {
+            return this.Column * GetWidth() + 10;
+        }
+
+        private int GetY()
+        {
+            return this.Row * GetHeigth();
+        }
+
+        private int GetWidth()
+        {
+            return this.Page.Width / Page.Columns;
+        }
+
+        private int GetHeigth()
+        {
+            return this.Page.Heigth / Page.Rows - 1;
+        }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Printing;
 using System.Linq;
 using PandyIT.VinylOrganizer.DAL.Model.Entities;
 
@@ -8,49 +7,44 @@ namespace PandyIt.VinylOrganizer.Labels.Entities
 {
     public class LabelPage
     {
-        private readonly int rows;
-        private readonly int columns;
-        private List<LabelSlot> labelSlots;
+        public int Rows { get; set; }
 
-        public LabelPage(int rows, int columns)
+        public int Columns { get; set; }
+
+        public int Width { get; set; }
+
+        public int Heigth { get; set; }
+
+        private List<LabelSlot> labelSlots = new List<LabelSlot>();
+
+        public LabelPage(int rows, int columns, int width, int heigth) 
         {
-            this.rows = rows;
-            this.columns = columns;
-
-            InitializeLabelSlots();
+            this.Rows = rows;
+            this.Columns = columns;
+            this.Width = width;
+            this.Heigth = heigth;
         }
 
-        private void InitializeLabelSlots()
+        public void AddLabel(int row, int column, LocationVinyl locationVinyl)
         {
-            labelSlots = new List<LabelSlot>();
-            for (var row = 0; row < this.rows; row++)
-            {
-                for (var column = 0; column < this.columns; column++)
-                {
-                    labelSlots.Add(new LabelSlot(row, column));
-                }
-            }
+            var labelSlot = new LabelSlot(this, locationVinyl, row, column);
+            labelSlots.Add(labelSlot);
         }
 
-        public void AddLabel(LocationVinyl locationVinyl)
+        public void Draw(Graphics graphics)
         {
-            this.GetFirstEmptyLabelSlot().LocationVinyl = locationVinyl;
-        }
-
-        private LabelSlot GetFirstEmptyLabelSlot()
-        {
-            return labelSlots.First(ls => ls.LocationVinyl == null);
-        }
-
-        public void Print(PrintPageEventArgs ev)
-        {
-            var width = ev.PageSettings.PaperSize.Width / this.columns;
-            var height = ev.PageSettings.PaperSize.Height / this.rows;
+            //using (var pen = new Pen(Color.Black))
+            //{
+            //    graphics.DrawRectangle(pen, 0, 0, this.Width, this.Heigth);
+            //}
 
             labelSlots
-                .Where(ls => ls.LocationVinyl != null)
                 .ToList()
-                .ForEach(ls => ls.Draw(ev.Graphics, width, height));
+                .ForEach(ls =>
+                {
+                    ls.Draw(graphics);
+                });
         }
+
     }
 }

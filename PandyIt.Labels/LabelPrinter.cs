@@ -1,4 +1,5 @@
-﻿using System.Drawing.Printing;
+﻿using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Linq;
 using PandyIt.VinylOrganizer.Labels.Entities;
 
@@ -6,16 +7,16 @@ namespace PandyIt.VinylOrganizer.Labels
 {
     public class LabelPrinter
     {
-        private readonly LabelPage page;
+        private IEnumerable<LabelPage> labelPages;
 
-        public LabelPrinter(LabelPage page)
+        public LabelPrinter(IEnumerable<LabelPage> labelPages)
         {
-            this.page = page;
+            this.labelPages = labelPages;
         }
 
         public void Print()
         {
-            var pdfPrinter = PrinterSettings.InstalledPrinters.Cast<string>().First(p => p.ToLower().Contains("pdf"));
+            var pdfPrinter = PrinterSettings.InstalledPrinters.Cast<string>().First(p => p.ToLower().Contains("4500"));
 
             var printDocument = new PrintDocument
             {
@@ -31,9 +32,7 @@ namespace PandyIt.VinylOrganizer.Labels
 
         private void pd_PrintPage(object sender, PrintPageEventArgs ev)
         {
-            //ev.PageSettings.Margins.Bottom = 0;
-            //ev.PageSettings.Margins.Top = 0;
-            this.page.Print(ev);                   
+            this.labelPages.First().Draw(ev.Graphics);
             ev.HasMorePages = false;
         }        
     }
