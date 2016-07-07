@@ -1,20 +1,15 @@
 ﻿using GalaSoft.MvvmLight.CommandWpf;
+using PandyIT.VinylOrganizer.DAL.Model.Entities;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
-namespace PandyIT.VinylOrganizer.UI.WPF.UserControls.TreeViews.Location
+namespace PandyIT.VinylOrganizer.UI.WPF.UserControls.TreeViews
 {
     /// <summary>
     /// Interaction logic for TreeViewLocations.xaml
@@ -24,9 +19,19 @@ namespace PandyIT.VinylOrganizer.UI.WPF.UserControls.TreeViews.Location
         public TreeViewLocations()
         {
             InitializeComponent();
-        }
+            var localLocations = ((App)Application.Current).VinylOrganizerDbContext.Locations.Local;
 
-        #region Properties
+            ObservableCollection<TreeItemLocation> treeItemLocations = new ObservableCollection<TreeItemLocation>();
+            localLocations.ToList().ForEach(l => treeItemLocations.Add(new TreeItemLocation(l, treeItemLocations)));
+
+            var rootView = CollectionViewSource.GetDefaultView(treeItemLocations);
+            rootView.Filter = (item) =>
+            {
+                var l = item as TreeItemLocation;
+                return l.Location.ParentLocationId == null;
+            };
+            this.Root = rootView;
+        }
 
         public static readonly DependencyProperty SelectedItemProperty =
             DependencyProperty.Register("SelectedItem", typeof(TreeItemLocation), typeof(TreeViewLocations));
@@ -37,19 +42,7 @@ namespace PandyIT.VinylOrganizer.UI.WPF.UserControls.TreeViews.Location
             set { SetValue(SelectedItemProperty, value); }
         }
 
-
-        private List<TreeItemLocation> root;
-        public List<TreeItemLocation> Root
-        {
-            get
-            {
-                return root ?? (root = new List<TreeItemLocation>() { new TreeItemLocationVinyl() });
-            }
-        }
-
-        #endregion Properties
-
-        #region Commands
+        public ICollectionView Root { get; set; }
 
         private RelayCommand<RoutedPropertyChangedEventArgs<Object>> selectedItemChangedCommand;
         public RelayCommand<RoutedPropertyChangedEventArgs<Object>> SelectedItemChangedCommand
@@ -67,6 +60,5 @@ namespace PandyIT.VinylOrganizer.UI.WPF.UserControls.TreeViews.Location
 
         }
 
-        #endregion Commands
     }
 }

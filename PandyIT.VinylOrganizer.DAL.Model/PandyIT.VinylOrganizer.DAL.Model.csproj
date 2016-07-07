@@ -53,7 +53,6 @@
     <Compile Include="Entities\LocationVinyl.cs" />
     <Compile Include="Entities\MusicTrack.cs" />
     <Compile Include="Entities\MusicTrackLocation.cs" />
-    <Compile Include="Entities\Types\Inches.cs" />
     <Compile Include="Interfaces\IVinylOrganizerSeeder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VinylOrganizerDbContext.cs" />

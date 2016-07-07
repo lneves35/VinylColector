@@ -162,7 +162,7 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
                 5861692
             };
 
-            discogsIds.ToList().ForEach(businessCtx.AddVinyl);
+            discogsIds.ToList().ForEach(businessCtx.AddDiscogsVinyl);
         }
     }
 }

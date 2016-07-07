@@ -35,6 +35,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="GalaSoft.MvvmLight, Version=5.3.0.19026, Culture=neutral, PublicKeyToken=e7570ab207bcb616, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.3.0.0\lib\net45\GalaSoft.MvvmLight.dll</HintPath>
       <Private>True</Private>
@@ -52,6 +60,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -77,10 +86,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="UserControls\TreeViews\Location\TreeItemCollection.cs" />
-    <Compile Include="UserControls\TreeViews\Location\TreeItemLocation.cs" />
-    <Compile Include="UserControls\TreeViews\Location\TreeItemLocationVinyl.cs" />
-    <Compile Include="UserControls\TreeViews\Location\TreeViewLocations.xaml.cs">
+    <Compile Include="UserControls\TreeViews\TreeItemLocation.cs" />
+    <Compile Include="UserControls\TreeViews\TreeViewLocations.xaml.cs">
       <DependentUpon>TreeViewLocations.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\MainViewModel.cs" />
@@ -97,7 +104,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="UserControls\TreeViews\Location\TreeViewLocations.xaml">
+    <Page Include="UserControls\TreeViews\TreeViewLocations.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -134,6 +141,18 @@
     <ProjectReference Include="..\PandyIT.Core.WPF\PandyIT.Core.WPF.csproj">
       <Project>{f8942031-2c7a-4134-9dd9-a4f4b17d7843}</Project>
       <Name>PandyIT.Core.WPF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PandyIT.Core\PandyIT.Core.csproj">
+      <Project>{b761c3c5-fc5d-476e-a926-3ebb5712fe04}</Project>
+      <Name>PandyIT.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PandyIT.VinylOrganizer.BAL.Business\PandyIT.VinylOrganizer.BAL.Business.csproj">
+      <Project>{1c632e3e-fc0e-4baf-89d3-48e06062c2d2}</Project>
+      <Name>PandyIT.VinylOrganizer.BAL.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PandyIT.VinylOrganizer.DAL.Model\PandyIT.VinylOrganizer.DAL.Model.csproj">
+      <Project>{a6befc89-5ad2-4517-a759-8c1c3e13e574}</Project>
+      <Name>PandyIT.VinylOrganizer.DAL.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

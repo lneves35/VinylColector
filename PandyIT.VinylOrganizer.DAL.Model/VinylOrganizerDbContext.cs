@@ -1,6 +1,5 @@
 ﻿using System.Data.Entity;
 using PandyIT.VinylOrganizer.DAL.Model.Entities;
-using PandyIT.VinylOrganizer.DAL.Model.Entities.Types;
 using PandyIT.VinylOrganizer.DAL.Model.Interfaces;
 
 namespace PandyIT.VinylOrganizer.DAL.Model
@@ -30,6 +29,5 @@ namespace PandyIT.VinylOrganizer.DAL.Model
         public DbSet<MusicTrack> MusicTracks { get; set; }
         public DbSet<MusicTrackInstance> MusicTrackLocations { get; set; }
         public DbSet<Location> Locations { get; set; }
-        public DbSet<Inches> Inches { get; set; }
     }
 }

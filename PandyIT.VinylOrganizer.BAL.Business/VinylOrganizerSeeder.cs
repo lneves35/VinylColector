@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using PandyIT.VinylOrganizer.DAL.Model;
-using PandyIT.VinylOrganizer.DAL.Model.Entities;
-using PandyIT.VinylOrganizer.DAL.Model.Entities.Types;
+﻿using PandyIT.VinylOrganizer.DAL.Model;
 using PandyIT.VinylOrganizer.DAL.Model.Interfaces;
 
 namespace PandyIT.VinylOrganizer.BAL.Business
