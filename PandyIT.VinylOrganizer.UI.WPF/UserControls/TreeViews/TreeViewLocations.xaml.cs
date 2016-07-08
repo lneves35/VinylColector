@@ -24,7 +24,8 @@ namespace PandyIT.VinylOrganizer.UI.WPF.UserControls.TreeViews
             ObservableCollection<TreeItemLocation> treeItemLocations = new ObservableCollection<TreeItemLocation>();
             localLocations.ToList().ForEach(l => treeItemLocations.Add(new TreeItemLocation(l, treeItemLocations)));
 
-            var rootView = CollectionViewSource.GetDefaultView(treeItemLocations);
+
+            ICollectionView rootView = new CollectionViewSource { Source = treeItemLocations }.View;
             rootView.Filter = (item) =>
             {
                 var l = item as TreeItemLocation;
