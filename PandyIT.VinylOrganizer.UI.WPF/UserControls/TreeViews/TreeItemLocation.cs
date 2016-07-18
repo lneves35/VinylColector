@@ -7,14 +7,14 @@ namespace PandyIT.VinylOrganizer.UI.WPF.UserControls.TreeViews
 {
     public class TreeItemLocation
     {
-        private ObservableCollection<TreeItemLocation> treeItemLocations;
+        private TreeViewLocations treeViewLocations;
         
         public Location Location { get; set; }
 
-        public TreeItemLocation(Location location, ObservableCollection<TreeItemLocation> treeItemLocations)
+        public TreeItemLocation(Location location, TreeViewLocations treeViewLocations)
         {
             this.Location = location;
-            this.treeItemLocations = treeItemLocations;
+            this.treeViewLocations = treeViewLocations;
         }
 
         public bool IsExpanded { get; set; }
@@ -27,7 +27,7 @@ namespace PandyIT.VinylOrganizer.UI.WPF.UserControls.TreeViews
             {
                 if (children == null)
                 {
-                    ICollectionView childrenView = new CollectionViewSource { Source = treeItemLocations }.View;
+                    ICollectionView childrenView = new CollectionViewSource { Source = this.treeViewLocations.TreeItemLocations }.View;
 
                     childrenView.Filter += (item) =>
                     {
@@ -39,6 +39,14 @@ namespace PandyIT.VinylOrganizer.UI.WPF.UserControls.TreeViews
                 return children;
             }
         }
-        
+
+        public string IconName
+        {
+            get
+            {
+                return TreeItemLocationIconResolver.Instance.GetResourceName(this.Location);
+            }
+        }
+
     }
 }

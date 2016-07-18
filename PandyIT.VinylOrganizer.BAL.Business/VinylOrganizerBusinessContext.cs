@@ -26,7 +26,7 @@ namespace PandyIT.VinylOrganizer.BAL.Business
             this.unitOfWork.GetRepository<MusicTrack>().Add(musicTrack);
         }
 
-        public void AddDiscogsVinyl(int releaseId)
+        public void AddDiscogsVinyl(int releaseId, int parentLocationId)
         {
             var discogs = new Discogs3("wTIlBQlrElaTrepxOBIw");
             var release = discogs.GetRelease(releaseId);
@@ -46,10 +46,17 @@ namespace PandyIT.VinylOrganizer.BAL.Business
                 Day = day,
                 Name = year.HasValue ? GetVinylLocationName(year.Value) : "#undefined",
                 Genre = release.Genres.First(),
-                DiscogsId = releaseId
+                DiscogsId = releaseId,
+                ParentLocationId = parentLocationId
             };
 
             this.unitOfWork.GetRepository<LocationVinyl>().Add(vinyl);
+        }
+
+        public void AddLocation(Location location)
+        {
+            this.unitOfWork.GetRepository<Location>()
+                .Add(location);
         }
 
         public LocationVinyl FetchVinylByDiscogsId(int id)

@@ -26,7 +26,7 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
             {
                 var businessCtx = new VinylOrganizerBusinessContext(uow);
 
-                AddVinyls(businessCtx);
+                //AddVinyls(businessCtx);
                 PrintLabels(businessCtx);
             }
         }
@@ -38,7 +38,14 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
 
             var discogsIdsToPrint = new[]
             {
-                801310
+                801310,
+                6185397,
+                2938879,
+                7391071,
+                8633490,
+                8604814,
+                8563459,
+                8102659
             };
 
             int i = 0;
@@ -154,10 +161,17 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
                 5003156,
                 6945937,
                 5861692,
-                801310
+                801310,
+                6185397,
+                2938879,
+                7391071,
+                8633490,
+                8604814,
+                8563459,
+                8102659
             };
 
-            discogsIds.ToList().ForEach(businessCtx.AddDiscogsVinyl);
+            discogsIds.ToList().ForEach(id => businessCtx.AddDiscogsVinyl(id, 1));
         }
     }
 }

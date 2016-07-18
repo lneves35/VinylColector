@@ -1,4 +1,5 @@
 ﻿using PandyIT.VinylOrganizer.DAL.Model;
+using PandyIT.VinylOrganizer.DAL.Model.Entities;
 using PandyIT.VinylOrganizer.DAL.Model.Interfaces;
 
 namespace PandyIT.VinylOrganizer.BAL.Business
@@ -18,10 +19,9 @@ namespace PandyIT.VinylOrganizer.BAL.Business
 
         public void Seed(VinylOrganizerDbContext ctx)
         {
-            //var rootLocation = new Location();
-            //rootLocation.ParentLocation = rootLocation;
-            //rootLocation.Name = "root";
-            //ctx.Locations.Add(rootLocation);
+            var rootLocation = new Location();
+            rootLocation.Name = "Collection";
+            ctx.Locations.Add(rootLocation);
         }
     }
 }

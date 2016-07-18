@@ -10,12 +10,10 @@ using System.Data.SqlClient;
 using PandyIT.VinylOrganizer.BAL.Business;
 using PandyIT.Core.Repository;
 using System.Data.Entity;
+using PandyIT.VinylOrganizer.DAL.Model.Entities;
 
 namespace PandyIT.VinylOrganizer.UI.WPF
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
     public partial class App : Application
     {
         public VinylOrganizerDbContext VinylOrganizerDbContext { get; set; }
@@ -43,10 +41,11 @@ namespace PandyIT.VinylOrganizer.UI.WPF
             //this.AddVinyls();
         }
 
-
-
         private void AddVinyls()
         {
+            var location = new Location() {Name = "Music Room", ParentLocationId = 1};
+            this.VinylOrganizerBusinessContext.AddLocation(location);
+
             var discogsIds = new[]
             {
                 95381,
@@ -144,7 +143,7 @@ namespace PandyIT.VinylOrganizer.UI.WPF
                 5861692
             };
 
-            discogsIds.ToList().ForEach(VinylOrganizerBusinessContext.AddDiscogsVinyl);
+            discogsIds.ToList().ForEach(id => VinylOrganizerBusinessContext.AddDiscogsVinyl(id, location.LocationId));
         }
 
     }

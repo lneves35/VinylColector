@@ -1,0 +1,6 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:PandyIT.VinylOrganizer.UI.WPF.Resources">
+    <BitmapImage x:Key="DatabaseIcon" x:Name="DatabaseIcon" UriSource="pack://application:,,,/Resources\Images\Icons\database.png"/>
+    <BitmapImage x:Key="BlueFolderIcon" x:Name="BlueFolderIcon" UriSource="pack://application:,,,/Resources\Images\Icons\bluefolder.png"/>
+</ResourceDictionary>
