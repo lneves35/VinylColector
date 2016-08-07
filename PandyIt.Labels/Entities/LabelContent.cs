@@ -34,8 +34,11 @@ namespace PandyIt.VinylOrganizer.Labels.Entities
             var fontFamily = new FontFamily("Times New Roman");
             var font = new Font(fontFamily, 24, FontStyle.Regular, GraphicsUnit.Pixel);
             var solidBrush = new SolidBrush(Color.Black);
+
+            var textRectangle = new RectangleF(new PointF(this.GetAvailableX(), this.GetAvailableY() + 30), new SizeF() { Height = 90, Width = this.GetAvailableWidth()});
+
             graphics.DrawString(this.LocationVinyl.Name, font, solidBrush, new PointF(this.GetAvailableX(), this.GetAvailableY()));
-            graphics.DrawString(this.LocationVinyl.Title, font, solidBrush, new PointF(this.GetAvailableX(), this.GetAvailableY() + 30));
+            graphics.DrawString(this.LocationVinyl.Title, font, solidBrush, textRectangle);
             graphics.DrawString(this.LocationVinyl.Genre, font, solidBrush, new PointF(this.GetAvailableX(), this.GetAvailableY() + 120));
         }
 

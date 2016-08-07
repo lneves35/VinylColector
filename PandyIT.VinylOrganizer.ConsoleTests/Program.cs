@@ -38,14 +38,11 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
 
             var discogsIdsToPrint = new[]
             {
-                801310,
-                6185397,
-                2938879,
-                7391071,
-                8633490,
-                8604814,
-                8563459,
-                8102659
+                8824586,
+                2392955,
+                4110065,
+                8750390,
+                6106087
             };
 
             int i = 0;
@@ -168,7 +165,22 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
                 8633490,
                 8604814,
                 8563459,
-                8102659
+                8102659,
+                8105079,
+                8633614,
+                8536301,
+                3966162,
+                8169015,
+                8804780,
+                8753133,
+                8204601,
+                3581905,
+                6162503,
+                8824586, //2016-0037 Playgroup ‎– Previously Unreleased
+                2392955,
+                4110065,
+                8750390,
+                6106087
             };
 
             discogsIds.ToList().ForEach(id => businessCtx.AddDiscogsVinyl(id, 1));
