@@ -66,6 +66,13 @@ namespace PandyIT.VinylOrganizer.BAL.Business
                 .Single();
         }
 
+        public LocationVinyl FetchVinylByName(string name)
+        {
+            return this.unitOfWork.GetRepository<LocationVinyl>()
+                .Find(lv => lv.Name == name)
+                .Single();
+        }
+
         public IEnumerable<LocationVinyl> GetAllLocationVinyl()
         {
             return this.unitOfWork.GetRepository<LocationVinyl>()

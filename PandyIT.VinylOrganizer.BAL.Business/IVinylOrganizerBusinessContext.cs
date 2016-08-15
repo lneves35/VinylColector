@@ -9,6 +9,8 @@ namespace PandyIT.VinylOrganizer.BAL.Business
 
         void AddDiscogsVinyl(int releaseId, int parentLocationId);
 
+        LocationVinyl FetchVinylByName(string name);
+
         void AddLocation(Location location);
     }
 }
