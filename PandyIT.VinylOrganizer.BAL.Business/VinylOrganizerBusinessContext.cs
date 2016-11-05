@@ -31,8 +31,7 @@ namespace PandyIT.VinylOrganizer.BAL.Business
             var discogs = new Discogs3("wTIlBQlrElaTrepxOBIw");
             var release = discogs.GetRelease(releaseId);
 
-
-            var releaseDate = release.ReleaseDate.Split('-');
+            var releaseDate = string.IsNullOrEmpty(release.ReleaseDate) ? DateTime.MinValue.ToString("yyyy-MM-dd").Split('-') : release.ReleaseDate.Split('-');
             var year = releaseDate[0].Length > 0 ? (short?)Convert.ToInt16(releaseDate[0]) : null;
             var month = releaseDate.Length > 1 ? (byte?)Convert.ToByte(releaseDate[1]) : null;
             var day = releaseDate.Length > 2 ? (byte?)Convert.ToByte(releaseDate[2]) : null;
@@ -85,7 +84,7 @@ namespace PandyIT.VinylOrganizer.BAL.Business
                 .Find(lv => lv.Year.HasValue && lv.Year.Value == year)
                 .Count();
 
-            return "#" + year + "-" + (curMax + 1).ToString().PadLeft(4, '0');
+            return "#" + year.ToString().PadLeft(4, '0') + "-" + (curMax + 1).ToString().PadLeft(4, '0');
         }
     }
 }
