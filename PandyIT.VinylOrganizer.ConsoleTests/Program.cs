@@ -39,7 +39,11 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
 
             var discogsIdsToPrint = new[]
             {
-                9390116
+                9596296,
+               9707780,
+               9835826,
+               9810577,
+               9797252
             };
 
             int i = 0;
@@ -345,7 +349,12 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
                // 8989470,
                // 9680607,
                // 9152893,
-                9390116
+               // 9390116,
+               9596296,
+               9707780,
+               9835826,
+               9810577,
+               9797252
             };
 
             discogsIds.ToList().ForEach(id => businessCtx.AddDiscogsVinyl(id, 1));
