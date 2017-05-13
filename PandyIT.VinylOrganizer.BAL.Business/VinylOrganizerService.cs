@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using DiscogsNet;
 using DiscogsNet.Api;
 using PandyIT.Core.Repository;
 using PandyIT.VinylOrganizer.DAL.Model.Entities;
@@ -9,7 +10,13 @@ namespace PandyIT.VinylOrganizer.BAL.Business
 {
     public class VinylOrganizerService : BaseService, IVinylOrganizerService
     {
-        public VinylOrganizerService(IUnitOfWork recordCaseUnitOfWork) : base(recordCaseUnitOfWork) { }
+        private readonly IDiscogs3Api discogs;
+
+        public VinylOrganizerService(IUnitOfWork recordCaseUnitOfWork, IDiscogs3Api discogs)
+            : base(recordCaseUnitOfWork)
+        {
+            this.discogs = discogs;
+        }
 
         public void AddMusicTrack(MusicTrack musicTrack)
         {
@@ -17,9 +24,8 @@ namespace PandyIT.VinylOrganizer.BAL.Business
         }
 
         public void AddDiscogsVinyl(int releaseId, int parentLocationId)
-        {
-            var discogs = new Discogs3("wTIlBQlrElaTrepxOBIw");
-            var release = discogs.GetRelease(releaseId);
+        {            
+            var release = this.discogs.GetRelease(releaseId);
 
             var releaseDate = string.IsNullOrEmpty(release.ReleaseDate) ? DateTime.MinValue.ToString("yyyy-MM-dd").Split('-') : release.ReleaseDate.Split('-');
             var year = releaseDate[0].Length > 0 ? (short?)Convert.ToInt16(releaseDate[0]) : null;

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using PandyIt.VinylOrganizer.Labels;
@@ -7,15 +6,25 @@ using PandyIt.VinylOrganizer.Labels.Entities;
 using PandyIT.Core.Repository;
 using PandyIT.VinylOrganizer.BAL.Business;
 using PandyIT.VinylOrganizer.DAL.Model;
-using System.Diagnostics;
 using System.IO;
+using DiscogsNet.Api;
+using log4net;
+using log4net.Config;
+using PandyIT.Core.Media;
+using PandyIT.VinylOrganizer.BAL.Business.Youtube;
 
 namespace PandyIT.VinylOrganizer.ConsoleTests
 {
     internal class Program
     {
+        private const string FfmpegPath = @"C:\Program Files (x86)\FFmpeg\ffmpeg.exe";
+
+
         private static void Main(string[] args)
         {
+            XmlConfigurator.Configure();
+            ILog log = LogManager.GetLogger(typeof(Program));
+
             var builder = new SqlConnectionStringBuilder()
             {
                 InitialCatalog = "teste",
@@ -23,24 +32,45 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
                 IntegratedSecurity = true
             };
 
+            var youtubeConfiguration = new YoutubeServiceConfiguration()
+            {
+                OutputFolder = new DirectoryInfo(@"C:\YoutubeAudio\output"),
+                WorkingFolder = new DirectoryInfo(@"C:\YoutubeAudio\temp")
+            };
+
             using (var ctx = new VinylOrganizerDbContext(builder.ToString(), VinylOrganizerSeeder.GetSeeder()))
             using (var uow = new UnitOfWork(ctx))
             {
-                var vinylOrganizerService = new VinylOrganizerService(uow);
-                var youtubeService = new YoutubeService(uow);
+                var vinylOrganizerService = new VinylOrganizerService(uow, new Discogs3("wTIlBQlrElaTrepxOBIw"));
+                var youtubeService = new YoutubeService(
+                    youtubeConfiguration, 
+                    log, 
+                    uow, 
+                    //new YoutubeDownloader(log, (a, ev) => Console.WriteLine(ev.ProgressPercentage)),
+                    new YoutubeDownloader(log, null),
+                    new FFmpegAdapter(FfmpegPath, log), 
+                    new Discogs3("wTIlBQlrElaTrepxOBIw"));
 
-                DownloadYoutube(youtubeService);
+                DownloadYoutubeAudio(youtubeService);
                 //AddVinyls(vinylOrganizerService);
                 //PrintLabelsByDiscogsIds(vinylOrganizerService);
                 //PrintLabelsByName(businessCtx);
             }
         }
 
-        private static void DownloadYoutube(YoutubeService youtubeService)
+        private static void DownloadYoutubeAudio(YoutubeService youtubeService)
         {
-            var uri = new Uri("https://www.youtube.com/watch?v=R5j1Y8EGWnc");
-            var di = new DirectoryInfo("c:\\temp");
-            youtubeService.DownloadVideo(uri, di);
+            var discogsIdsToExtractAudio = new[]
+            {
+                
+                3945093,
+                4358240,
+                10201948,
+                7221898,
+                1109580
+            };
+
+            youtubeService.ExtractMp3(discogsIdsToExtractAudio);
         }
 
         private static void PrintLabelsByDiscogsIds(VinylOrganizerService businessCtx)

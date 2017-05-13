@@ -10,6 +10,7 @@ using System.Data.SqlClient;
 using PandyIT.VinylOrganizer.BAL.Business;
 using PandyIT.Core.Repository;
 using System.Data.Entity;
+using DiscogsNet.Api;
 using PandyIT.VinylOrganizer.DAL.Model.Entities;
 
 namespace PandyIT.VinylOrganizer.UI.WPF
@@ -34,7 +35,7 @@ namespace PandyIT.VinylOrganizer.UI.WPF
             this.VinylOrganizerDbContext = new VinylOrganizerDbContext(builder.ToString(),
                 VinylOrganizerSeeder.GetSeeder());
             this.UnitOfWork = new UnitOfWork(this.VinylOrganizerDbContext);
-            this.VinylOrganizerService = new VinylOrganizerService(this.UnitOfWork);
+            this.VinylOrganizerService = new VinylOrganizerService(this.UnitOfWork, new Discogs3("wTIlBQlrElaTrepxOBIw"));
 
             this.VinylOrganizerDbContext.Locations.Load();
 
