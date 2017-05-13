@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using DiscogsNet;
 using log4net;
 using log4net.Core;
@@ -44,8 +45,14 @@ namespace PandyIT.VinylOrganizer.BAL.Business.Youtube
             try
             {
                 videoFile = youtubeDownloader.DownloadVideo(videoSource, configuration.WorkingFolder);
-                var outputFile = new FileInfo(Path.Combine(outputFolder.FullName, Path.GetFileNameWithoutExtension(videoFile.Name) + ".mp3"));
+                var outputFile =
+                    new FileInfo(Path.Combine(outputFolder.FullName,
+                        Path.GetFileNameWithoutExtension(videoFile.Name) + ".mp3"));
                 ffmpegAdapter.ExtractMp3(videoFile, outputFile);
+            }
+            catch (YoutubeDownloaderException e)
+            {
+                //Should mark as unsuccessful download
             }
             finally
             {
@@ -57,16 +64,17 @@ namespace PandyIT.VinylOrganizer.BAL.Business.Youtube
         {
             var release = discogs.GetRelease(discogsId);
 
-            this.log.Info(string.Format("Extract MP3 from discogs release {0}: {1}", discogsId, release.ToString()));
+            this.log.Info(string.Format("Process discogs release {0}: {1}", discogsId, release));
 
-            if (!release.Videos.Any())
+            if (release.Videos == null)
             {
                 this.log.Info(string.Format("No videos found for discogs release {0}", discogsId));
+                return;
             }
 
             this.log.Info(string.Format("Found {0} videos for discogs release {1}", release.Videos.Length, discogsId));
 
-            release.Videos?
+            release.Videos
                 .ToList()
                 .ForEach(v => ExtractMp3(
                     new Uri(v.Src), 

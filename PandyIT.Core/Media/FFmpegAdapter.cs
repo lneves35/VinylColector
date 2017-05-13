@@ -32,26 +32,27 @@ namespace PandyIT.Core.Media
 
         public void ExtractMp3(FileInfo source, FileInfo target)
         {
-            this.log.Info(string.Format("Extracting MP3 from file {0} -> {1}", source, target));
+            this.log.Info(string.Format("Extracting MP3: {0}", target.Name));
 
-            var args = string.Format("-i \"{0}\" -vn \"{1}\"", source.FullName, target.FullName);
+            var args = string.Format("-i \"{0}\" -vn \"{1}\" -y", source.FullName, target.FullName);
 
             var proc = new Process
             {
                 StartInfo =
                 {
                     RedirectStandardOutput = true,
-                    RedirectStandardError = true,
+                    RedirectStandardError = false,
                     FileName = ffmpegFileInfo.FullName,
                     Arguments = args,
                     UseShellExecute = false,
-                    //CreateNoWindow = true
+                    WindowStyle = ProcessWindowStyle.Hidden,
+                    CreateNoWindow = true
                 }
             };
 
             proc.Start();
 
-            //string output = proc.StandardOutput.ReadToEnd();
+            string output = proc.StandardOutput.ReadToEnd();
             proc.WaitForExit();
         }
     }
