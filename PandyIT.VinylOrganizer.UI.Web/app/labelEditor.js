@@ -9,3 +9,4 @@ var LabelApplication;
     }());
     LabelApplication.LabelEditor = LabelEditor;
 })(LabelApplication || (LabelApplication = {}));
+//# sourceMappingURL=labelEditor.js.map

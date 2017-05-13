@@ -24,17 +24,17 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
             using (var ctx = new VinylOrganizerDbContext(builder.ToString(), VinylOrganizerSeeder.GetSeeder()))
             using (var uow = new UnitOfWork(ctx))
             {
-                var businessCtx = new VinylOrganizerBusinessContext(uow);
+                var vinylOrganizerService = new VinylOrganizerService(uow);
 
-                AddVinyls(businessCtx);
-                PrintLabelsByDiscogsIds(businessCtx);
+                AddVinyls(vinylOrganizerService);
+                PrintLabelsByDiscogsIds(vinylOrganizerService);
                 //PrintLabelsByName(businessCtx);
             }
         }
 
-        private static void PrintLabelsByDiscogsIds(VinylOrganizerBusinessContext businessCtx)
+        private static void PrintLabelsByDiscogsIds(VinylOrganizerService businessCtx)
         {
-            LabelPage labelPage = new LabelPage(5,2,827,1169);
+            var labelPage = new LabelPage(5,2,827,1169);
             
 
             var discogsIdsToPrint = new[]
@@ -46,7 +46,7 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
                 1109580
             };
 
-            int i = 0;
+            var i = 0;
             foreach (var discogsId in discogsIdsToPrint)
             {
                 var column = i % 2;
@@ -63,9 +63,9 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
         }
 
 
-        private static void PrintLabelsByName(VinylOrganizerBusinessContext businessCtx)
+        private static void PrintLabelsByName(VinylOrganizerService businessCtx)
         {
-            LabelPage labelPage = new LabelPage(5, 2, 827, 1169);
+            var labelPage = new LabelPage(5, 2, 827, 1169);
 
             var discogsIdsToPrint = new[]
             {
@@ -97,7 +97,7 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
             printer.Print();
         }
 
-        private static void AddVinyls(VinylOrganizerBusinessContext businessCtx)
+        private static void AddVinyls(VinylOrganizerService businessCtx)
         {
             var discogsIds = new []
             {

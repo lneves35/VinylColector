@@ -20,7 +20,7 @@ namespace PandyIT.VinylOrganizer.UI.WPF
 
         public IUnitOfWork UnitOfWork { get; set; }
 
-        public IVinylOrganizerBusinessContext VinylOrganizerBusinessContext { get; set; }
+        public IVinylOrganizerService VinylOrganizerService { get; set; }
 
         public App()
         {
@@ -34,7 +34,7 @@ namespace PandyIT.VinylOrganizer.UI.WPF
             this.VinylOrganizerDbContext = new VinylOrganizerDbContext(builder.ToString(),
                 VinylOrganizerSeeder.GetSeeder());
             this.UnitOfWork = new UnitOfWork(this.VinylOrganizerDbContext);
-            this.VinylOrganizerBusinessContext = new VinylOrganizerBusinessContext(this.UnitOfWork);
+            this.VinylOrganizerService = new VinylOrganizerService(this.UnitOfWork);
 
             this.VinylOrganizerDbContext.Locations.Load();
 
@@ -44,7 +44,7 @@ namespace PandyIT.VinylOrganizer.UI.WPF
         private void AddVinyls()
         {
             var location = new Location() {Name = "Music Room", ParentLocationId = 1};
-            this.VinylOrganizerBusinessContext.AddLocation(location);
+            this.VinylOrganizerService.AddLocation(location);
 
             var discogsIds = new[]
             {
@@ -143,7 +143,7 @@ namespace PandyIT.VinylOrganizer.UI.WPF
                 5861692
             };
 
-            discogsIds.ToList().ForEach(id => VinylOrganizerBusinessContext.AddDiscogsVinyl(id, location.LocationId));
+            discogsIds.ToList().ForEach(id => VinylOrganizerService.AddDiscogsVinyl(id, location.LocationId));
         }
 
     }

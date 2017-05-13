@@ -7,11 +7,11 @@ using PandyIT.VinylOrganizer.DAL.Model.Entities;
 
 namespace PandyIT.VinylOrganizer.BAL.Business
 {
-    public class VinylOrganizerBusinessContext : IVinylOrganizerBusinessContext
+    public class VinylOrganizerService : IVinylOrganizerService
     {
         private readonly IUnitOfWork unitOfWork;
 
-        public VinylOrganizerBusinessContext(IUnitOfWork recordCaseUnitOfWork)
+        public VinylOrganizerService(IUnitOfWork recordCaseUnitOfWork)
         {
             if (recordCaseUnitOfWork == null)
             {

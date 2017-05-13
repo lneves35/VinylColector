@@ -3,7 +3,7 @@ using PandyIT.VinylOrganizer.DAL.Model.Entities;
 
 namespace PandyIT.VinylOrganizer.BAL.Business
 {
-    public interface IVinylOrganizerBusinessContext
+    public interface IVinylOrganizerService
     {
         void AddMusicTrack(MusicTrack musicTrack);
 
