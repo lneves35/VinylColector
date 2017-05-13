@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using PandyIt.VinylOrganizer.Labels;
@@ -7,6 +8,7 @@ using PandyIT.Core.Repository;
 using PandyIT.VinylOrganizer.BAL.Business;
 using PandyIT.VinylOrganizer.DAL.Model;
 using System.Diagnostics;
+using System.IO;
 
 namespace PandyIT.VinylOrganizer.ConsoleTests
 {
@@ -25,11 +27,20 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
             using (var uow = new UnitOfWork(ctx))
             {
                 var vinylOrganizerService = new VinylOrganizerService(uow);
+                var youtubeService = new YoutubeService(uow);
 
-                AddVinyls(vinylOrganizerService);
-                PrintLabelsByDiscogsIds(vinylOrganizerService);
+                DownloadYoutube(youtubeService);
+                //AddVinyls(vinylOrganizerService);
+                //PrintLabelsByDiscogsIds(vinylOrganizerService);
                 //PrintLabelsByName(businessCtx);
             }
+        }
+
+        private static void DownloadYoutube(YoutubeService youtubeService)
+        {
+            var uri = new Uri("https://www.youtube.com/watch?v=R5j1Y8EGWnc");
+            var di = new DirectoryInfo("c:\\temp");
+            youtubeService.DownloadVideo(uri, di);
         }
 
         private static void PrintLabelsByDiscogsIds(VinylOrganizerService businessCtx)

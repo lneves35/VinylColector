@@ -7,19 +7,9 @@ using PandyIT.VinylOrganizer.DAL.Model.Entities;
 
 namespace PandyIT.VinylOrganizer.BAL.Business
 {
-    public class VinylOrganizerService : IVinylOrganizerService
+    public class VinylOrganizerService : BaseService, IVinylOrganizerService
     {
-        private readonly IUnitOfWork unitOfWork;
-
-        public VinylOrganizerService(IUnitOfWork recordCaseUnitOfWork)
-        {
-            if (recordCaseUnitOfWork == null)
-            {
-                throw new ArgumentNullException(nameof(recordCaseUnitOfWork));
-            }
-
-            this.unitOfWork = recordCaseUnitOfWork;
-        }
+        public VinylOrganizerService(IUnitOfWork recordCaseUnitOfWork) : base(recordCaseUnitOfWork) { }
 
         public void AddMusicTrack(MusicTrack musicTrack)
         {
