@@ -1,12 +1,10 @@
-﻿using System.Linq;
-using System.Windows;
+﻿using System.Windows;
 using PandyIT.VinylOrganizer.DAL.Model;
 using System.Data.SqlClient;
 using PandyIT.VinylOrganizer.BAL.Business;
 using PandyIT.Core.Repository;
 using System.Data.Entity;
 using PandyIT.VinylOrganizer.BAL.Business.Discogs;
-using PandyIT.VinylOrganizer.DAL.Model.Entities;
 
 namespace PandyIT.VinylOrganizer.UI.WPF
 {

@@ -15,8 +15,7 @@ namespace PandyIT.VinylOrganizer.BAL.Business.Discogs
 
         public DiscogsRelease GetRelease(int releaseId)
         {
-            var release = client.GetReleaseAsync(1704673).Result;
-            return release;
+            return client.GetReleaseAsync(releaseId).Result;
         }
     }
 }

@@ -53,7 +53,7 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
                     new FFmpegAdapter(FfmpegPath, log),
                     discogs);
 
-                //DownloadYoutubeAudio(youtubeService);
+                DownloadYoutubeAudio(youtubeService);
                 //AddVinyls(vinylOrganizerService);
                 //PrintLabelsByDiscogsIds(vinylOrganizerService);
                 //PrintLabelsByName(businessCtx);
