@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DiscogsNet;
-using DiscogsNet.Api;
 using PandyIT.Core.Repository;
+using PandyIT.VinylOrganizer.BAL.Business.Discogs;
 using PandyIT.VinylOrganizer.DAL.Model.Entities;
 
 namespace PandyIT.VinylOrganizer.BAL.Business
 {
     public class VinylOrganizerService : BaseService, IVinylOrganizerService
     {
-        private readonly IDiscogs3Api discogs;
+        private readonly IDiscogsAdapter discogs;
 
-        public VinylOrganizerService(IUnitOfWork recordCaseUnitOfWork, IDiscogs3Api discogs)
+        public VinylOrganizerService(IUnitOfWork recordCaseUnitOfWork, IDiscogsAdapter discogs)
             : base(recordCaseUnitOfWork)
         {
             this.discogs = discogs;
@@ -27,20 +26,16 @@ namespace PandyIT.VinylOrganizer.BAL.Business
         {            
             var release = this.discogs.GetRelease(releaseId);
 
-            var releaseDate = string.IsNullOrEmpty(release.ReleaseDate) ? DateTime.MinValue.ToString("yyyy-MM-dd").Split('-') : release.ReleaseDate.Split('-');
-            var year = releaseDate[0].Length > 0 ? (short?)Convert.ToInt16(releaseDate[0]) : null;
-            var month = releaseDate.Length > 1 ? (byte?)Convert.ToByte(releaseDate[1]) : null;
-            var day = releaseDate.Length > 2 ? (byte?)Convert.ToByte(releaseDate[2]) : null;
-
-
+            var releaseDate = release.date_added;
+            
             var vinyl = new LocationVinyl
             {
-                Title =  (release.Artists.First().Name + " - " + release.Title),
-                Year = year,
-                Month = month,
-                Day = day,
-                Name = year.HasValue ? GetVinylLocationName(year.Value) : "#undefined",
-                Genre = release.Genres.First(),
+                Title =  (release.artists.First().name + " - " + release.title),
+                Year = (short)releaseDate.Year,
+                Month = (byte)releaseDate.Month,
+                Day = (byte)releaseDate.Day,
+                Name = GetVinylLocationName((short)releaseDate.Year),
+                Genre = release.genres.First(),
                 DiscogsId = releaseId,
                 ParentLocationId = parentLocationId
             };

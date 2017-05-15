@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using DiscogsNet;
 using log4net;
 using log4net.Core;
 using PandyIT.Core.Extensions;
 using PandyIT.Core.Media;
 using PandyIT.Core.Repository;
+using PandyIT.VinylOrganizer.BAL.Business.Discogs;
 
 namespace PandyIT.VinylOrganizer.BAL.Business.Youtube
 {
@@ -19,10 +19,10 @@ namespace PandyIT.VinylOrganizer.BAL.Business.Youtube
         private readonly IUnitOfWork recordCaseUnitOfWork;
         private readonly IYoutubeDownloader youtubeDownloader;
         private readonly IFFmpegAdapter ffmpegAdapter;
-        private readonly IDiscogs3Api discogs;
+        private readonly IDiscogsAdapter discogs;
         
 
-        public YoutubeService(YoutubeServiceConfiguration configuration, ILog log, IUnitOfWork recordCaseUnitOfWork, IYoutubeDownloader youtubeDownloader, IFFmpegAdapter ffmpegAdapter, IDiscogs3Api discogs)
+        public YoutubeService(YoutubeServiceConfiguration configuration, ILog log, IUnitOfWork recordCaseUnitOfWork, IYoutubeDownloader youtubeDownloader, IFFmpegAdapter ffmpegAdapter, IDiscogsAdapter discogs)
             : base(recordCaseUnitOfWork)
         {
             this.configuration = configuration;
@@ -66,18 +66,18 @@ namespace PandyIT.VinylOrganizer.BAL.Business.Youtube
 
             this.log.Info(string.Format("Process discogs release {0}: {1}", discogsId, release));
 
-            if (release.Videos == null)
+            if (release.videos == null)
             {
                 this.log.Info(string.Format("No videos found for discogs release {0}", discogsId));
                 return;
             }
 
-            this.log.Info(string.Format("Found {0} videos for discogs release {1}", release.Videos.Length, discogsId));
+            this.log.Info(string.Format("Found {0} videos for discogs release {1}", release.videos.Length, discogsId));
 
-            release.Videos
+            release.videos
                 .ToList()
                 .ForEach(v => ExtractMp3(
-                    new Uri(v.Src), 
+                    new Uri(v.uri), 
                     new DirectoryInfo(Path.Combine(configuration.OutputFolder.FullName, release.ToString().ToSafeFilename()))
                     ));
         }
