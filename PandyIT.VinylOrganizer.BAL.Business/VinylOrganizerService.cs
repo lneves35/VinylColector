@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using log4net;
 using PandyIT.Core.Repository;
 using PandyIT.VinylOrganizer.BAL.Business.Discogs;
 using PandyIT.VinylOrganizer.DAL.Model.Entities;
@@ -10,11 +10,13 @@ namespace PandyIT.VinylOrganizer.BAL.Business
     public class VinylOrganizerService : BaseService, IVinylOrganizerService
     {
         private readonly IDiscogsAdapter discogs;
+        private readonly ILog log;
 
-        public VinylOrganizerService(IUnitOfWork recordCaseUnitOfWork, IDiscogsAdapter discogs)
+        public VinylOrganizerService(IUnitOfWork recordCaseUnitOfWork, IDiscogsAdapter discogs, ILog log)
             : base(recordCaseUnitOfWork)
         {
             this.discogs = discogs;
+            this.log = log;
         }
 
         public void AddMusicTrack(MusicTrack musicTrack)
@@ -27,7 +29,7 @@ namespace PandyIT.VinylOrganizer.BAL.Business
             var release = this.discogs.GetRelease(releaseId);
 
             var releaseDate = release.date_added;
-            
+
             var vinyl = new LocationVinyl
             {
                 Title =  (release.artists.First().name + " - " + release.title),
@@ -41,6 +43,7 @@ namespace PandyIT.VinylOrganizer.BAL.Business
             };
 
             this.unitOfWork.GetRepository<LocationVinyl>().Add(vinyl);
+            log.Info(string.Format("Discogs vinyl release added: {0} ",(release.artists.First().name + " - " + release.title)));
         }
 
         public void AddLocation(Location location)

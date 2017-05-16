@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using DiscogsClient.Data.Query;
 using PandyIT.VinylOrganizer.BAL.Business.Discogs;
 
 namespace PandyIT.VinylOrganizer.BAL.Business.Parsers
@@ -16,24 +18,16 @@ namespace PandyIT.VinylOrganizer.BAL.Business.Parsers
             this.discogs = discogs;
         }
 
-        public void ParseTextLineToDiscogs(string textLine)
+        public int ParseTextLineToDiscogsId(string textLine)
         {
-            var splitted = ValidateAndSplit(textLine);
-            var artist = splitted[0].Trim();
-            var title = splitted[1].Trim();
+            var query = new DiscogsSearch()
+            {
+                query = textLine
+            };
 
-            //SearchQuery query = new SearchQuery();
-            //query.Artist = artist;
-            //query.Title = title;
-            //query.Query = "q=Nirvana&token=qXdqQlDKAhFpWYTcTgVIDmvehYahJBvAqZvNbiHF";
-
-            //var sb = new StringBuilder();
-            //sb.AddQueryParam("token", "qXdqQlDKAhFpWYTcTgVIDmvehYahJBvAqZvNbiHF");
-            //query.AddQueryParams(sb);
-
-            //var results = discogsApi.Search(query);
-
-
+            var result = discogs.Search(query);
+            var array =  result.ToArray();
+            return 0;
         }
 
         private string[] ValidateAndSplit(string textLine)

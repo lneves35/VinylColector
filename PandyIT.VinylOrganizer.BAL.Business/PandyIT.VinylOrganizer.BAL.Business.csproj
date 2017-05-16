@@ -81,11 +81,12 @@
   <ItemGroup>
     <Compile Include="BaseService.cs" />
     <Compile Include="Discogs\DiscogsAdapter.cs" />
-    <Compile Include="Discogs\Entities\Release.cs" />
     <Compile Include="Discogs\IDiscogsAdapter.cs" />
+    <Compile Include="ISettingsService.cs" />
     <Compile Include="IVinylOrganizerService.cs" />
     <Compile Include="Parsers\ParsingService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SettingsService.cs" />
     <Compile Include="VinylOrganizerService.cs" />
     <Compile Include="VinylOrganizerSeeder.cs" />
     <Compile Include="Youtube\YoutubeService.cs" />
@@ -95,6 +96,10 @@
     <ProjectReference Include="..\PandyIT.Core\PandyIT.Core.csproj">
       <Project>{b761c3c5-fc5d-476e-a926-3ebb5712fe04}</Project>
       <Name>PandyIT.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PandyIT.VinylOrganizer.Common\PandyIT.VinylOrganizer.Common.csproj">
+      <Project>{FBD5A3E5-DA49-413D-B783-721DF6166868}</Project>
+      <Name>PandyIT.VinylOrganizer.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\PandyIT.VinylOrganizer.DAL.Model\PandyIT.VinylOrganizer.DAL.Model.csproj">
       <Project>{a6befc89-5ad2-4517-a759-8c1c3e13e574}</Project>
