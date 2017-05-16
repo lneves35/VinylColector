@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
 using log4net;
-using log4net.Core;
 using PandyIT.Core.Extensions;
 using PandyIT.Core.Media;
 using PandyIT.Core.Repository;
@@ -12,11 +10,10 @@ using PandyIT.VinylOrganizer.BAL.Business.Discogs;
 
 namespace PandyIT.VinylOrganizer.BAL.Business.Youtube
 {
-    public class YoutubeService : BaseService
+    public class YoutubeService : BaseService, IYoutubeService
     {
         private YoutubeServiceConfiguration configuration;
         private readonly ILog log;
-        private readonly IUnitOfWork recordCaseUnitOfWork;
         private readonly IYoutubeDownloader youtubeDownloader;
         private readonly IFFmpegAdapter ffmpegAdapter;
         private readonly IDiscogsAdapter discogs;
@@ -27,7 +24,6 @@ namespace PandyIT.VinylOrganizer.BAL.Business.Youtube
         {
             this.configuration = configuration;
             this.log = log;
-            this.recordCaseUnitOfWork = recordCaseUnitOfWork;
             this.youtubeDownloader = youtubeDownloader;
             this.ffmpegAdapter = ffmpegAdapter;
             this.discogs = discogs;

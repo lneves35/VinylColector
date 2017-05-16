@@ -1,1 +1,2 @@
 - Encrypt consumer key / secret
+= Throtle discogs request locally

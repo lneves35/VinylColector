@@ -12,6 +12,8 @@ namespace PandyIT.VinylOrganizer.BAL.Business
         private readonly IDiscogsAdapter discogs;
         private readonly ILog log;
 
+        private int requestCount = 0;
+
         public VinylOrganizerService(IUnitOfWork recordCaseUnitOfWork, IDiscogsAdapter discogs, ILog log)
             : base(recordCaseUnitOfWork)
         {
@@ -37,13 +39,13 @@ namespace PandyIT.VinylOrganizer.BAL.Business
                 Month = (byte)releaseDate.Month,
                 Day = (byte)releaseDate.Day,
                 Name = GetVinylLocationName((short)releaseDate.Year),
-                Genre = release.genres.First(),
+                Genre = release.genres?.First(),
                 DiscogsId = releaseId,
                 ParentLocationId = parentLocationId
             };
 
             this.unitOfWork.GetRepository<LocationVinyl>().Add(vinyl);
-            log.Info(string.Format("Discogs vinyl release added: {0} ",(release.artists.First().name + " - " + release.title)));
+            log.Info(string.Format("{0} Discogs vinyl release added: {1} ", ++requestCount, (release.artists.First().name + " - " + release.title)));
         }
 
         public void AddLocation(Location location)

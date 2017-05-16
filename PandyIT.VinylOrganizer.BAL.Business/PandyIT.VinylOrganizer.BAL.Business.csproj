@@ -84,11 +84,11 @@
     <Compile Include="Discogs\IDiscogsAdapter.cs" />
     <Compile Include="ISettingsService.cs" />
     <Compile Include="IVinylOrganizerService.cs" />
-    <Compile Include="Parsers\ParsingService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SettingsService.cs" />
     <Compile Include="VinylOrganizerService.cs" />
     <Compile Include="VinylOrganizerSeeder.cs" />
+    <Compile Include="Youtube\IYoutubeService.cs" />
     <Compile Include="Youtube\YoutubeService.cs" />
     <Compile Include="Youtube\YoutubeServiceConfiguration.cs" />
   </ItemGroup>
