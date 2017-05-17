@@ -6,17 +6,21 @@ using System.Threading.Tasks;
 using DiscogsClient;
 using DiscogsClient.Data.Query;
 using DiscogsClient.Data.Result;
+using log4net;
 using RestSharpHelper.OAuth1;
 
 namespace PandyIT.VinylOrganizer.BAL.Business.Discogs
 {
     public class DiscogsAdapter : IDiscogsAdapter
     {
-        private DiscogsClient.DiscogsClient client;
+        private readonly DiscogsClient.DiscogsClient client;
 
-        public DiscogsAdapter(OAuthCompleteInformation oAuth)
+        private readonly ILog log;
+
+        public DiscogsAdapter(OAuthCompleteInformation oAuth, ILog log)
         {
-            this.client = new DiscogsClient.DiscogsClient(oAuth);            
+            this.client = new DiscogsClient.DiscogsClient(oAuth);
+            this.log = log;
         }
 
         public static OAuthCompleteInformation Authenticate(Func<string> reader, OAuthConsumerInformation consumerInformation)
@@ -37,20 +41,16 @@ namespace PandyIT.VinylOrganizer.BAL.Business.Discogs
             return client.GetReleaseAsync(releaseId).Result;
         }
 
-        public IEnumerable<DiscogsSearchResult> Search(DiscogsSearch query)
+        public DiscogsMaster GetMaster(int masterId)
         {
-            return this.client.SearchAsEnumerable(query);
+            return client.GetMasterAsync(masterId).Result;
         }
 
-        public IEnumerable<int> ExtractReleaseIdsFromText(string text)
+        public IEnumerable<DiscogsSearchResult> Search(DiscogsSearch query)
         {
-            string[] queries = text.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
-            return queries
-                .ToList()
-                .Select(q => new DiscogsSearch() {query = q})
-                .Select(ds => Search(ds).FirstOrDefault())
-                .Where(sr => sr != null)
-                .Select(sr => sr.id);
-        }
+            var result = this.client.SearchAsEnumerable(query).ToArray();
+            log.Info(string.Format("{0} results found on Discogs search for {1}", result.Length, query.query));
+            return result;
+        }       
     }
 }

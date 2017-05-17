@@ -8,9 +8,9 @@ namespace PandyIT.VinylOrganizer.BAL.Business.Discogs
     {
         DiscogsRelease GetRelease(int releaseId);
 
-        IEnumerable<DiscogsSearchResult> Search(DiscogsSearch query);
+        DiscogsMaster GetMaster(int masterId);
 
-        IEnumerable<int> ExtractReleaseIdsFromText(string text);
+        IEnumerable<DiscogsSearchResult> Search(DiscogsSearch query);        
     }
 
     

@@ -88,8 +88,8 @@
     <Compile Include="SettingsService.cs" />
     <Compile Include="VinylOrganizerService.cs" />
     <Compile Include="VinylOrganizerSeeder.cs" />
-    <Compile Include="Youtube\IYoutubeService.cs" />
-    <Compile Include="Youtube\YoutubeService.cs" />
+    <Compile Include="Youtube\IYoutubeHarvester.cs" />
+    <Compile Include="Youtube\YoutubeHarvester.cs" />
     <Compile Include="Youtube\YoutubeServiceConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>

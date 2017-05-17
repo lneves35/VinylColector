@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using DiscogsClient.Data.Query;
+using DiscogsClient.Data.Result;
 using log4net;
 using PandyIT.Core.Extensions;
 using PandyIT.Core.Media;
@@ -10,16 +11,16 @@ using PandyIT.VinylOrganizer.BAL.Business.Discogs;
 
 namespace PandyIT.VinylOrganizer.BAL.Business.Youtube
 {
-    public class YoutubeService : BaseService, IYoutubeService
+    public class YoutubeHarvester : BaseService, IYoutubeHarvester
     {
-        private YoutubeServiceConfiguration configuration;
+        private readonly YoutubeServiceConfiguration configuration;
         private readonly ILog log;
         private readonly IYoutubeDownloader youtubeDownloader;
         private readonly IFFmpegAdapter ffmpegAdapter;
         private readonly IDiscogsAdapter discogs;
         
 
-        public YoutubeService(YoutubeServiceConfiguration configuration, ILog log, IUnitOfWork recordCaseUnitOfWork, IYoutubeDownloader youtubeDownloader, IFFmpegAdapter ffmpegAdapter, IDiscogsAdapter discogs)
+        public YoutubeHarvester(YoutubeServiceConfiguration configuration, ILog log, IUnitOfWork recordCaseUnitOfWork, IYoutubeDownloader youtubeDownloader, IFFmpegAdapter ffmpegAdapter, IDiscogsAdapter discogs)
             : base(recordCaseUnitOfWork)
         {
             this.configuration = configuration;
@@ -56,10 +57,18 @@ namespace PandyIT.VinylOrganizer.BAL.Business.Youtube
             }
         }
 
-        public void ExtractMp3(int discogsId)
+        public void ExtractMp3(int discogsId, DiscogsEntityType entityType)
         {
-            var release = discogs.GetRelease(discogsId);
-
+            DiscogsReleaseBase release;
+            if (entityType == DiscogsEntityType.release)
+            {
+                release = discogs.GetRelease(discogsId);
+            }
+            else
+            {
+                release = discogs.GetMaster(discogsId);
+            }
+           
             this.log.Info(string.Format("Process discogs release {0}: {1}", discogsId, release));
 
             if (release.videos == null)
@@ -70,19 +79,35 @@ namespace PandyIT.VinylOrganizer.BAL.Business.Youtube
 
             this.log.Info(string.Format("Found {0} videos for discogs release {1}", release.videos.Length, discogsId));
 
+            var folderName = string.Format("{0} - {1}", release.artists.First().name, release.title).ToSafeFilename();
+
             release.videos
                 .ToList()
                 .ForEach(v => ExtractMp3(
                     new Uri(v.uri), 
-                    new DirectoryInfo(Path.Combine(configuration.OutputFolder.FullName, release.ToString().ToSafeFilename()))
+                    new DirectoryInfo(Path.Combine(configuration.OutputFolder.FullName, folderName))
                     ));
         }
 
-        public void ExtractMp3(IEnumerable<int> discogsIds)
+        public void ExtractMp3FromTextLines(string text)
         {
-            discogsIds
-                .ToList()
-                .ForEach(ExtractMp3);
+            var lines = text.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+
+            foreach (var line in lines)
+            {
+                var searchQuery = new DiscogsSearch() {query = line};
+                var firstResult = discogs.Search(searchQuery).FirstOrDefault();
+                if (firstResult != null)
+                {
+                    this.ExtractMp3(firstResult.id, firstResult.type);
+                }
+            }
+        }
+
+        public void ExtractMp3FromTextFile(string filePath)
+        {
+            string readText = File.ReadAllText(filePath);
+            this.ExtractMp3FromTextLines(readText);
         }
     }
 }

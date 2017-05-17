@@ -7,6 +7,7 @@ using PandyIT.Core.Repository;
 using PandyIT.VinylOrganizer.BAL.Business;
 using PandyIT.VinylOrganizer.DAL.Model;
 using System.IO;
+using DiscogsClient.Data.Query;
 using log4net;
 using log4net.Config;
 using PandyIT.Core.Media;
@@ -60,7 +61,7 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
                     settingsService.AddDiscogsAuthenticationToken(oAuth.TokenInformation);
                 }
 
-                discogsAdapter = new DiscogsAdapter(oAuth);
+                discogsAdapter = new DiscogsAdapter(oAuth, log);
             }
         }
 
@@ -78,7 +79,7 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
             using (var uow = new UnitOfWork(ctx))
             {                
                 var vinylOrganizerService = new VinylOrganizerService(uow, discogsAdapter, log);
-                var youtubeService = new YoutubeService(
+                var youtubeService = new YoutubeHarvester(
                     youtubeConfiguration, 
                     log, 
                     uow, 
@@ -94,26 +95,10 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
             }
         }
 
-        private static void GetMP3FromText(IYoutubeService youtubeService)
+        private static void GetMP3FromText(IYoutubeHarvester youtubeService)
         {
-            string text = @"Steve Reich - Music For 18 Musicians
-Freddie Hubbard -Little Sunflower
-Emma Donovan &The Putbacks - Daddy
-Bacao Rhythm &Steel Band - Was Dog A Doughnut
-DJ Nigga Fox - Lento Violento
-Mr.Scruff Feat. Danny Breaks -Bang The Floor
-Mdcl & Rahel - Hope
-Harleighblu - How Deep Is Your Love
-Sly & The Family Stone - Can't Strain My Brain
-G&M - Missing
-D'Angelo - Back To The Future (Part I)
-Marvin Gaye - A Funky Space Reincarnation(Album Version)
-Peter Jacques Band - Mighty Fine
-Arthur's Landing - Love Dancing
-Ny* ak - Goodbye";
-
-            var ids = discogsAdapter.ExtractReleaseIdsFromText(text);
-            youtubeService.ExtractMp3(ids);
+            var filePath = @"c:\YoutubeAudio\tracklist.txt";
+            youtubeService.ExtractMp3FromTextFile(filePath);
         }
 
         private static void Print(string msg)
@@ -126,14 +111,9 @@ Ny* ak - Goodbye";
             Console.SetCursorPosition(oldLeft, oldTop);
         }
 
-        private static void DownloadYoutubeAudio(YoutubeService youtubeService)
+        private static void DownloadYoutubeAudio(YoutubeHarvester youtubeService)
         {
-            var discogsIdsToExtractAudio = new[]
-            {
-                1148256
-            };
-
-            youtubeService.ExtractMp3(discogsIdsToExtractAudio);
+            youtubeService.ExtractMp3(1148256, DiscogsEntityType.release);
         }
 
         private static void PrintLabelsByDiscogsIds(VinylOrganizerService businessCtx)
