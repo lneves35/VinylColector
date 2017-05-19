@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using DiscogsClient.Data.Query;
-using DiscogsClient.Data.Result;
 using log4net;
 using PandyIT.Core.Extensions;
 using PandyIT.Core.Media;
@@ -59,17 +59,9 @@ namespace PandyIT.VinylOrganizer.BAL.Business.Youtube
 
         public void ExtractMp3(int discogsId, DiscogsEntityType entityType)
         {
-            DiscogsReleaseBase release;
-            if (entityType == DiscogsEntityType.release)
-            {
-                release = discogs.GetRelease(discogsId);
-            }
-            else
-            {
-                release = discogs.GetMaster(discogsId);
-            }
-           
-            this.log.Info(string.Format("Process discogs release {0}: {1}", discogsId, release));
+            var release = discogs.GetRelease(discogsId);
+
+            this.log.Info(string.Format("Process discogs release {0}: {1}", discogsId, release.artists.First().name + release.title));
 
             if (release.videos == null)
             {
@@ -89,14 +81,25 @@ namespace PandyIT.VinylOrganizer.BAL.Business.Youtube
                     ));
         }
 
-        public void ExtractMp3FromTextLines(string text)
+        public void ExtractMp3FromText(string text)
         {
             var lines = text.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+            ExtractMp3FromTextLines(lines);
+        }
 
+        public void ExtractMp3FromTextLines(IEnumerable<string> lines)
+        {
             foreach (var line in lines)
             {
-                var searchQuery = new DiscogsSearch() {query = line};
-                var firstResult = discogs.Search(searchQuery).FirstOrDefault();
+                var searchQuery = new DiscogsSearch()
+                {
+                    query = line,
+                    type = DiscogsEntityType.release
+                };
+
+                var firstResult = discogs.Search(searchQuery)
+                    .FirstOrDefault();
+
                 if (firstResult != null)
                 {
                     this.ExtractMp3(firstResult.id, firstResult.type);
@@ -107,7 +110,7 @@ namespace PandyIT.VinylOrganizer.BAL.Business.Youtube
         public void ExtractMp3FromTextFile(string filePath)
         {
             string readText = File.ReadAllText(filePath);
-            this.ExtractMp3FromTextLines(readText);
+            this.ExtractMp3FromText(readText);
         }
     }
 }

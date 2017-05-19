@@ -48,7 +48,9 @@ namespace PandyIT.VinylOrganizer.BAL.Business.Discogs
 
         public IEnumerable<DiscogsSearchResult> Search(DiscogsSearch query)
         {
-            var result = this.client.SearchAsEnumerable(query).ToArray();
+            var result = this.client.SearchAsEnumerable(query)
+                .ToArray();
+
             log.Info(string.Format("{0} results found on Discogs search for {1}", result.Length, query.query));
             return result;
         }       

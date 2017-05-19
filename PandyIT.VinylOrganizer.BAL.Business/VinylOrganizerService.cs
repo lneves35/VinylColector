@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using log4net;
 using PandyIT.Core.Repository;
@@ -30,15 +31,20 @@ namespace PandyIT.VinylOrganizer.BAL.Business
         {            
             var release = this.discogs.GetRelease(releaseId);
 
-            var releaseDate = release.date_added;
+
+            var dateString = release.released ?? DateTime.MinValue.ToString("yyyy-MM-dd");
+            var releaseDate = dateString.Split('-');
+            var year = releaseDate[0].Length > 0 ? (short?)Convert.ToInt16(releaseDate[0]) : null;
+            var month = releaseDate.Length > 1 ? (byte?)Convert.ToByte(releaseDate[1]) : null;
+            var day = releaseDate.Length > 2 ? (byte?)Convert.ToByte(releaseDate[2]) : null;
 
             var vinyl = new LocationVinyl
             {
                 Title =  (release.artists.First().name + " - " + release.title),
-                Year = (short)releaseDate.Year,
-                Month = (byte)releaseDate.Month,
-                Day = (byte)releaseDate.Day,
-                Name = GetVinylLocationName((short)releaseDate.Year),
+                Year = year,
+                Month = month,
+                Day = day,
+                Name = year.HasValue ? GetVinylLocationName(year.Value) : "#undefined",
                 Genre = release.genres?.First(),
                 DiscogsId = releaseId,
                 ParentLocationId = parentLocationId

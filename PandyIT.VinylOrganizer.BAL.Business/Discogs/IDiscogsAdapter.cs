@@ -11,7 +11,5 @@ namespace PandyIT.VinylOrganizer.BAL.Business.Discogs
         DiscogsMaster GetMaster(int masterId);
 
         IEnumerable<DiscogsSearchResult> Search(DiscogsSearch query);        
-    }
-
-    
+    }    
 }

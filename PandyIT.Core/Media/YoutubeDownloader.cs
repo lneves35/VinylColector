@@ -21,9 +21,7 @@ namespace PandyIT.Core.Media
         }
 
         public FileInfo DownloadVideo(Uri source, DirectoryInfo outputFolder)
-        {
-            this.log.Info(string.Format("Downloading video: {0}", source.AbsoluteUri));
-
+        {            
             Directory.CreateDirectory(outputFolder.FullName);
             try
             {
@@ -36,7 +34,7 @@ namespace PandyIT.Core.Media
                 {
                     DownloadUrlResolver.DecryptDownloadUrl(video);
                 }
-
+                this.log.Info(string.Format("Downloading video: {0} ({1})", source.AbsoluteUri, video.Title));
                 var outputFile = Path.Combine(outputFolder.FullName, video.Title.ToSafeFilename() + video.VideoExtension);
                 var videoDownloader = new VideoDownloader(video, outputFile);
 
