@@ -9,6 +9,7 @@ using PandyIT.VinylOrganizer.DAL.Model;
 using System.IO;
 using log4net;
 using log4net.Config;
+using PandyIT.Core.Integration.Youtube;
 using PandyIT.Core.Media;
 using PandyIT.VinylOrganizer.BAL.Business.Discogs;
 using PandyIT.VinylOrganizer.BAL.Business.Harvester;
@@ -95,7 +96,9 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
                 //PrintLabelsByDiscogsIds(vinylOrganizerService);
                 //PrintLabelsByName(businessCtx);
                 //GetMP3FromText(youtubeService);
-                GetTracksFromMixesDbTrackList(harvestingService);
+                //GetTracksFromMixesDbTrackList(harvestingService);
+
+                YoutubeAdapter.Test();
             }
         }
 
