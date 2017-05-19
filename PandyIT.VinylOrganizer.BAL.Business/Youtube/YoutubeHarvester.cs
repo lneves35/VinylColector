@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using DiscogsClient.Data.Query;
 using log4net;
-using PandyIT.Core.Extensions;
 using PandyIT.Core.Media;
 using PandyIT.Core.Repository;
 using PandyIT.VinylOrganizer.BAL.Business.Discogs;
@@ -57,60 +53,60 @@ namespace PandyIT.VinylOrganizer.BAL.Business.Youtube
             }
         }
 
-        public void ExtractMp3(int discogsId, DiscogsEntityType entityType)
-        {
-            var release = discogs.GetRelease(discogsId);
+        //public void ExtractMp3(int discogsId, DiscogsEntityType entityType)
+        //{
+        //    var release = discogs.GetRelease(discogsId);
 
-            this.log.Info(string.Format("Process discogs release {0}: {1}", discogsId, release.artists.First().name + release.title));
+        //    this.log.Info(string.Format("Process discogs release {0}: {1}", discogsId, release.artists.First().name + release.title));
 
-            if (release.videos == null)
-            {
-                this.log.Info(string.Format("No videos found for discogs release {0}", discogsId));
-                return;
-            }
+        //    if (release.videos == null)
+        //    {
+        //        this.log.Info(string.Format("No videos found for discogs release {0}", discogsId));
+        //        return;
+        //    }
 
-            this.log.Info(string.Format("Found {0} videos for discogs release {1}", release.videos.Length, discogsId));
+        //    this.log.Info(string.Format("Found {0} videos for discogs release {1}", release.videos.Length, discogsId));
 
-            var folderName = string.Format("{0} - {1}", release.artists.First().name, release.title).ToSafeFilename();
+        //    var folderName = string.Format("{0} - {1}", release.artists.First().name, release.title).ToSafeFilename();
 
-            release.videos
-                .ToList()
-                .ForEach(v => ExtractMp3(
-                    new Uri(v.uri),
-                    new DirectoryInfo(Path.Combine(configuration.OutputFolder.FullName, folderName))
-                    ));
-        }
+        //    release.videos
+        //        .ToList()
+        //        .ForEach(v => ExtractMp3(
+        //            new Uri(v.uri),
+        //            new DirectoryInfo(Path.Combine(configuration.OutputFolder.FullName, folderName))
+        //            ));
+        //}
 
-        public void ExtractMp3FromText(string text)
-        {
-            var lines = text.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
-            ExtractMp3FromTextLines(lines);
-        }
+        //public void ExtractMp3FromText(string text)
+        //{
+        //    var lines = text.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+        //    ExtractMp3FromTextLines(lines);
+        //}
 
-        public void ExtractMp3FromTextLines(IEnumerable<string> lines)
-        {
-            foreach (var line in lines)
-            {
-                var searchQuery = new DiscogsSearch()
-                {
-                    query = line,
-                    type = DiscogsEntityType.release
-                };
+        //public void ExtractMp3FromTextLines(IEnumerable<string> lines)
+        //{            
+        //    foreach (var line in lines)
+        //    {
+        //        var searchQuery = new DiscogsSearch()
+        //        {
+        //            query = line,
+        //            type = DiscogsEntityType.release
+        //        };
 
-                var firstResult = discogs.Search(searchQuery)
-                    .FirstOrDefault();
+        //        var firstResult = discogs.Search(searchQuery)
+        //            .FirstOrDefault();
 
-                if (firstResult != null)
-                {
-                    this.ExtractMp3(firstResult.id, firstResult.type);
-                }
-            }
-        }
+        //        if (firstResult != null)
+        //        {
+        //            this.ExtractMp3(firstResult.id, firstResult.type);
+        //        }
+        //    }
+        //}
 
-        public void ExtractMp3FromTextFile(string filePath)
-        {
-            string readText = File.ReadAllText(filePath);
-            this.ExtractMp3FromText(readText);
-        }
+        //public void ExtractMp3FromTextFile(string filePath)
+        //{
+        //    string readText = File.ReadAllText(filePath);
+        //    this.ExtractMp3FromText(readText);
+        //}
     }
 }

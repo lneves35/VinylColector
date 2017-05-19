@@ -54,7 +54,5 @@ namespace PandyIT.Core.Media
                 throw new YoutubeDownloaderException(ex);
             }
         }
-
-        
     }
 }

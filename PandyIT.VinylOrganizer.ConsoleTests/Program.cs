@@ -7,11 +7,11 @@ using PandyIT.Core.Repository;
 using PandyIT.VinylOrganizer.BAL.Business;
 using PandyIT.VinylOrganizer.DAL.Model;
 using System.IO;
-using DiscogsClient.Data.Query;
 using log4net;
 using log4net.Config;
 using PandyIT.Core.Media;
 using PandyIT.VinylOrganizer.BAL.Business.Discogs;
+using PandyIT.VinylOrganizer.BAL.Business.Harvester;
 using PandyIT.VinylOrganizer.BAL.Business.MixesDB;
 using PandyIT.VinylOrganizer.BAL.Business.Youtube;
 
@@ -88,21 +88,23 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
                     new FFmpegAdapter(FfmpegPath, log),
                     discogsAdapter);
 
+                var harvestingService = new HarvestingService(discogsAdapter);
+
                 //DownloadYoutubeAudio(youtubeService);
                 //AddVinyls(vinylOrganizerService);
                 //PrintLabelsByDiscogsIds(vinylOrganizerService);
                 //PrintLabelsByName(businessCtx);
                 //GetMP3FromText(youtubeService);
-                GetTracksFromMixesDbTrackList(youtubeService);
+                GetTracksFromMixesDbTrackList(harvestingService);
             }
         }
 
-        private static void GetTracksFromMixesDbTrackList(IYoutubeHarvester youtubeService)
+        private static void GetTracksFromMixesDbTrackList(HarvestingService youtubeService)
         {
             var url = "https://www.mixesdb.com/w/Chart:2017-01-10_-_Fingerman_-_Juno_Chart";
             var extractor = new MixesDbTrackListExtractor();
             var tracks = extractor.GetTrackList(url);
-            youtubeService.ExtractMp3FromTextLines(tracks);
+            youtubeService.HarvestMusickTracks(tracks);
         }
 
         private static void Print(string msg)
@@ -113,11 +115,6 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
             Console.Write(msg);
 
             Console.SetCursorPosition(oldLeft, oldTop);
-        }
-
-        private static void DownloadYoutubeAudio(YoutubeHarvester youtubeService)
-        {
-            youtubeService.ExtractMp3(1148256, DiscogsEntityType.release);
         }
 
         private static void PrintLabelsByDiscogsIds(VinylOrganizerService businessCtx)

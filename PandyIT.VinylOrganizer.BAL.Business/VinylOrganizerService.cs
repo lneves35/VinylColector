@@ -30,28 +30,21 @@ namespace PandyIT.VinylOrganizer.BAL.Business
         public void AddDiscogsVinyl(int releaseId, int parentLocationId)
         {            
             var release = this.discogs.GetRelease(releaseId);
-
-
-            var dateString = release.released ?? DateTime.MinValue.ToString("yyyy-MM-dd");
-            var releaseDate = dateString.Split('-');
-            var year = releaseDate[0].Length > 0 ? (short?)Convert.ToInt16(releaseDate[0]) : null;
-            var month = releaseDate.Length > 1 ? (byte?)Convert.ToByte(releaseDate[1]) : null;
-            var day = releaseDate.Length > 2 ? (byte?)Convert.ToByte(releaseDate[2]) : null;
-
+            
             var vinyl = new LocationVinyl
             {
-                Title =  (release.artists.First().name + " - " + release.title),
-                Year = year,
-                Month = month,
-                Day = day,
-                Name = year.HasValue ? GetVinylLocationName(year.Value) : "#undefined",
-                Genre = release.genres?.First(),
+                Title =  (release.Artist + " - " + release.Title),
+                Year = (short?)release.Released.Year,
+                Month = (byte?)release.Released.Month,
+                Day = (byte?)release.Released.Day,
+                Name = GetVinylLocationName((short)release.Released.Year),
+                Genre = release.Genres?.First(),
                 DiscogsId = releaseId,
                 ParentLocationId = parentLocationId
             };
 
             this.unitOfWork.GetRepository<LocationVinyl>().Add(vinyl);
-            log.Info(string.Format("{0} Discogs vinyl release added: {1} ", ++requestCount, (release.artists.First().name + " - " + release.title)));
+            log.Info(string.Format("{0} Discogs vinyl release added: {1} ", ++requestCount, (release.Artist + " - " + release.Title)));
         }
 
         public void AddLocation(Location location)

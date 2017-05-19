@@ -172,9 +172,9 @@
       <Project>{b761c3c5-fc5d-476e-a926-3ebb5712fe04}</Project>
       <Name>PandyIT.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PandyIT.VinylOrganizer.BAL.Business\PandyIT.VinylOrganizer.BAL.Business.csproj">
+    <ProjectReference Include="..\PandyIT.VinylOrganizer.BAL.Business\PandyIT.VinylOrganizer.Services.csproj">
       <Project>{1c632e3e-fc0e-4baf-89d3-48e06062c2d2}</Project>
-      <Name>PandyIT.VinylOrganizer.BAL.Business</Name>
+      <Name>PandyIT.VinylOrganizer.Services</Name>
     </ProjectReference>
     <ProjectReference Include="..\PandyIT.VinylOrganizer.DAL.Model\PandyIT.VinylOrganizer.DAL.Model.csproj">
       <Project>{a6befc89-5ad2-4517-a759-8c1c3e13e574}</Project>

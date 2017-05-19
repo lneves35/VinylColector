@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using DiscogsClient;
 using DiscogsClient.Data.Query;
-using DiscogsClient.Data.Result;
 using log4net;
+using PandyIT.Core.Integration.Discogs.Entities;
 using RestSharpHelper.OAuth1;
 
 namespace PandyIT.VinylOrganizer.BAL.Business.Discogs
@@ -36,23 +35,29 @@ namespace PandyIT.VinylOrganizer.BAL.Business.Discogs
             return reader();
         }
 
-        public DiscogsRelease GetRelease(int releaseId)
+        public Release GetRelease(int releaseId)
         {
-            return client.GetReleaseAsync(releaseId).Result;
+            var discogsRelease = client.GetReleaseAsync(releaseId).Result;
+            return new Release(discogsRelease);
         }
 
-        public DiscogsMaster GetMaster(int masterId)
+        public Release[] Search(string artist, string title)
         {
-            return client.GetMasterAsync(masterId).Result;
-        }
+            var query = new DiscogsSearch()
+            {
+                query = artist + " " + title,
+            };
 
-        public IEnumerable<DiscogsSearchResult> Search(DiscogsSearch query)
-        {
-            var result = this.client.SearchAsEnumerable(query)
+            var result = this.client
+                .SearchAsEnumerable(query)
+                .Where(res => res.type == DiscogsEntityType.release)
                 .ToArray();
 
-            log.Info(string.Format("{0} results found on Discogs search for {1}", result.Length, query.query));
-            return result;
+            var releases = result.Where(r => r.type == DiscogsEntityType.release).Select(r => GetRelease(r.id)).ToArray();
+
+            log.Info(string.Format("{0} results found on Discogs search for {1}", releases.Length, query.query));
+
+            return releases;
         }       
     }
 }

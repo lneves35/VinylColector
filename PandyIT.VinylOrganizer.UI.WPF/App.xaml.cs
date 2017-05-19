@@ -6,7 +6,6 @@ using PandyIT.Core.Repository;
 using System.Data.Entity;
 using log4net;
 using log4net.Config;
-using PandyIT.VinylOrganizer.BAL.Business.Discogs;
 
 namespace PandyIT.VinylOrganizer.UI.WPF
 {
