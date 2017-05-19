@@ -76,7 +76,7 @@ namespace PandyIT.VinylOrganizer.BAL.Business.Youtube
             release.videos
                 .ToList()
                 .ForEach(v => ExtractMp3(
-                    new Uri(v.uri), 
+                    new Uri(v.uri),
                     new DirectoryInfo(Path.Combine(configuration.OutputFolder.FullName, folderName))
                     ));
         }
