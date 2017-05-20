@@ -1,16 +1,24 @@
-﻿namespace PandyIT.VinylOrganizer.BAL.Business.MixesDB
+﻿namespace PandyIT.VinylOrganizer.Services.MixesDB
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
+    using System.Text.RegularExpressions;
+    using log4net;
     using HtmlAgilityPack;
     using PandyIT.Core.Extensions;
-    using System;
-    using System.Text.RegularExpressions;
     using PandyIT.VinylOrganizer.DAL.Model.Entities;
 
     public class MixesDbTrackListExtractor
     {
+        private ILog log;
+
+        public MixesDbTrackListExtractor(ILog log)
+        {
+            this.log = log;
+        }
+
         public IEnumerable<MusicTrack> GetTrackList(string url)
         {
             var rawHtml = new WebClient().DownloadString(url);
@@ -18,10 +26,14 @@
             htmlDoc.LoadHtml(rawHtml);
 
             var type = GetTrackListType(htmlDoc);
-            var trackListLines = GetTrackListLines(type, htmlDoc);
+            var trackListLines = GetTrackListLines(type, htmlDoc).ToArray();
             var musicTracks = trackListLines.Select(CreateMusicTrack);
-            return musicTracks;
 
+            var parsingInfo = string.Format("Parsed {0} tracks from {1}", trackListLines.Length, url);
+            log.Info(parsingInfo);
+            trackListLines.ToList().ForEach(track => this.log.Info(track));
+
+            return musicTracks;
         }
 
         private MusicTrack CreateMusicTrack(string line)
@@ -35,12 +47,12 @@
             };
         }
 
-        private static IEnumerable<string> GetTrackListLines(string type, HtmlDocument htmlDoc)
+        private IEnumerable<string> GetTrackListLines(string type, HtmlDocument htmlDoc)
         {
             IEnumerable<string> trackListLines;
 
-            if (type == "Chart")
-            {
+            //if (type == "Chart")
+            //{
                 trackListLines = htmlDoc.DocumentNode
                     .Descendants("ol")
                     .First()
@@ -48,18 +60,20 @@
                     .Select(
                         li => li.InnerText
                     );
-            }
-            else
-            {
-                trackListLines = htmlDoc.DocumentNode
-                    .Descendants("div")
-                    .Where(div => div.Attributes.Contains("class") && div.Attributes["class"].Value.Contains("list-track"))
-                    .Select(
-                        div => div.InnerText
-                    );
-            }
+            //}
+            //else
+            //{
+            //    trackListLines = htmlDoc.DocumentNode
+            //        .Descendants("div")
+            //        .Where(div => div.Attributes.Contains("class") && div.Attributes["class"].Value.Contains("list-track"))
+            //        .Select(
+            //            div => div.InnerText
+            //        );
+            //}
 
-            return trackListLines.Select(line => line.RemoveBrackets().Trim()).Distinct();
+            return trackListLines
+                .Select(line => line.RemoveBrackets().Trim())
+                .Distinct();
         }
 
         private static string GetTrackListType(HtmlDocument htmlDoc)

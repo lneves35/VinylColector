@@ -13,7 +13,7 @@ using PandyIT.Core.Integration.Discogs;
 using PandyIT.Core.Integration.Youtube;
 using PandyIT.VinylOrganizer.BAL.Business.Discogs;
 using PandyIT.VinylOrganizer.BAL.Business.Harvester;
-using PandyIT.VinylOrganizer.BAL.Business.MixesDB;
+using PandyIT.VinylOrganizer.Services.MixesDB;
 
 namespace PandyIT.VinylOrganizer.ConsoleTests
 {
@@ -23,6 +23,8 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
         private static ILog log;
         private static IDiscogsAdapter discogsAdapter;
         private static IYoutubeAdapter youtubeAdapter;
+        private static YoutubeHarvester youtubeHarvester;
+
 
         private const string FfmpegPath = @"C:\Program Files (x86)\FFmpeg\ffmpeg.exe";
 
@@ -32,6 +34,7 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
             BootstrapConnectionString();
             BootstrapDiscogs();
             BootstrapYoutube();
+            youtubeHarvester = new YoutubeHarvester(youtubeAdapter, log);
         }
 
         private static void BootstrapConnectionString()
@@ -76,18 +79,13 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
             using (var uow = new UnitOfWork(ctx))
             {                
                 var vinylOrganizerService = new VinylOrganizerService(uow, discogsAdapter, log);
-                
-
-
-                youtubeService.Search("Free Fire");
-                //var harvestingService = new HarvestingService(discogsAdapter);
 
                 //DownloadYoutubeAudio(youtubeService);
                 //AddVinyls(vinylOrganizerService);
                 //PrintLabelsByDiscogsIds(vinylOrganizerService);
                 //PrintLabelsByName(businessCtx);
                 //GetMP3FromText(youtubeService);
-                //GetTracksFromMixesDbTrackList(harvestingService);
+                GetTracksFromMixesDbTrackList();
             }
         }
 
@@ -105,12 +103,12 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
             youtubeAdapter = new YoutubeAdapter(youtubeConfiguration, log);
         }
 
-        private static void GetTracksFromMixesDbTrackList(HarvestingService youtubeService)
+        private static void GetTracksFromMixesDbTrackList()
         {
-            var url = "https://www.mixesdb.com/w/Chart:2017-01-10_-_Fingerman_-_Juno_Chart";
-            var extractor = new MixesDbTrackListExtractor();
+            var url = "https://www.mixesdb.com/w/2017-05-19_-_Toddla_T_-_Steel_City,_BBC_Radio_1";
+            var extractor = new MixesDbTrackListExtractor(log);
             var tracks = extractor.GetTrackList(url);
-            youtubeService.HarvestMusickTracks(tracks);
+            youtubeHarvester.HarvestMusickTracks(tracks);
         }
 
         private static void Print(string msg)

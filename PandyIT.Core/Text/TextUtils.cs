@@ -12,8 +12,14 @@ namespace PandyIT.Core.Text
             return noBracket;
         }
 
-        public static Int32 Levenshtein(String a, String b)
+        public static Int32 Levenshtein(String a, String b, bool ignoreCase)
         {
+            if (ignoreCase)
+            {
+                a = a.ToUpper();
+                b = b.ToUpper();
+            }
+
             if (string.IsNullOrEmpty(a))
             {
                 if (!string.IsNullOrEmpty(b))

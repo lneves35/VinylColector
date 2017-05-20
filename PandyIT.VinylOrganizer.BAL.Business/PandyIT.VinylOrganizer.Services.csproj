@@ -101,7 +101,6 @@
       <HintPath>..\packages\Rx-Linq.2.2.5\lib\net45\System.Reactive.Linq.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Zlib.Portable, Version=1.11.0.0, Culture=neutral, PublicKeyToken=431cba815f6a8b5b, processorArchitecture=MSIL">
       <HintPath>..\packages\Zlib.Portable.Signed.1.11.0\lib\portable-net4+sl5+wp8+win8+wpa81+MonoTouch+MonoAndroid\Zlib.Portable.dll</HintPath>
@@ -110,7 +109,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseService.cs" />
-    <Compile Include="Harvester\HarvestingService.cs" />
+    <Compile Include="Harvester\YoutubeHarvester.cs" />
     <Compile Include="ISettingsService.cs" />
     <Compile Include="IVinylOrganizerService.cs" />
     <Compile Include="MixesDB\MixesDbTrackListExtractor.cs" />
@@ -123,6 +122,10 @@
     <ProjectReference Include="..\PandyIT.Core.Integration.Discogs\PandyIT.Core.Integration.Discogs.csproj">
       <Project>{9B007046-E861-485B-972B-61F1294835F4}</Project>
       <Name>PandyIT.Core.Integration.Discogs</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PandyIT.Core.Integration.Youtube\PandyIT.Core.Integration.Youtube.csproj">
+      <Project>{8255E7C4-684A-41EF-9B91-25DA56D1A43A}</Project>
+      <Name>PandyIT.Core.Integration.Youtube</Name>
     </ProjectReference>
     <ProjectReference Include="..\PandyIT.Core\PandyIT.Core.csproj">
       <Project>{b761c3c5-fc5d-476e-a926-3ebb5712fe04}</Project>
