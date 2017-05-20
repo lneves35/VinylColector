@@ -10,11 +10,9 @@ using System.IO;
 using log4net;
 using log4net.Config;
 using PandyIT.Core.Integration.Youtube;
-using PandyIT.Core.Media;
 using PandyIT.VinylOrganizer.BAL.Business.Discogs;
 using PandyIT.VinylOrganizer.BAL.Business.Harvester;
 using PandyIT.VinylOrganizer.BAL.Business.MixesDB;
-using PandyIT.VinylOrganizer.BAL.Business.Youtube;
 
 namespace PandyIT.VinylOrganizer.ConsoleTests
 {
@@ -74,22 +72,21 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
             var youtubeConfiguration = new YoutubeServiceConfiguration()
             {
                 OutputFolder = new DirectoryInfo(@"C:\YoutubeAudio\output"),
-                WorkingFolder = new DirectoryInfo(@"C:\YoutubeAudio\temp")
+                WorkingFolder = new DirectoryInfo(@"C:\YoutubeAudio\temp"),
+                ApplicationName = "Vinyl Organizer",
+                FFMpegPath = FfmpegPath,
+                GoogleAPIKey = "AIzaSyCb_j_yNGwAuQqKpPgWt-XSsm8eEhmDhYQ"
             };
 
             using (var ctx = new VinylOrganizerDbContext(sqlConnectionStringBuilder.ToString(), VinylOrganizerSeeder.GetSeeder()))
             using (var uow = new UnitOfWork(ctx))
             {                
                 var vinylOrganizerService = new VinylOrganizerService(uow, discogsAdapter, log);
-                var youtubeService = new YoutubeHarvester(
-                    youtubeConfiguration, 
-                    log, 
-                    uow, 
-                    new YoutubeDownloader(log, (a, ev) => Print(string.Format("\r{0}% Complete", (int)ev.ProgressPercentage))),
-                    new FFmpegAdapter(FfmpegPath, log),
-                    discogsAdapter);
+                var youtubeService = new YoutubeAdapter(youtubeConfiguration, log);
 
-                var harvestingService = new HarvestingService(discogsAdapter);
+
+                youtubeService.Search("Free Fire");
+                //var harvestingService = new HarvestingService(discogsAdapter);
 
                 //DownloadYoutubeAudio(youtubeService);
                 //AddVinyls(vinylOrganizerService);
@@ -97,8 +94,6 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
                 //PrintLabelsByName(businessCtx);
                 //GetMP3FromText(youtubeService);
                 //GetTracksFromMixesDbTrackList(harvestingService);
-
-                YoutubeAdapter.Test();
             }
         }
 

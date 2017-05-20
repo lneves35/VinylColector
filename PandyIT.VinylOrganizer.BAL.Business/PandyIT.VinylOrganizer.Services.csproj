@@ -118,9 +118,6 @@
     <Compile Include="SettingsService.cs" />
     <Compile Include="VinylOrganizerService.cs" />
     <Compile Include="VinylOrganizerSeeder.cs" />
-    <Compile Include="Youtube\IYoutubeHarvester.cs" />
-    <Compile Include="Youtube\YoutubeHarvester.cs" />
-    <Compile Include="Youtube\YoutubeServiceConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PandyIT.Core.Integration.Discogs\PandyIT.Core.Integration.Discogs.csproj">

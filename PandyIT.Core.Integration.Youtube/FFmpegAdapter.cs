@@ -1,10 +1,10 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using log4net;
-
-namespace PandyIT.Core.Media
+﻿namespace PandyIT.Core.Integration.Youtube
 {
+    using System;
+    using System.Diagnostics;
+    using System.IO;
+    using log4net;
+
     public class FFmpegAdapter : IFFmpegAdapter
     {
         private readonly FileInfo ffmpegFileInfo;

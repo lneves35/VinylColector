@@ -87,11 +87,6 @@
   <ItemGroup>
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="FileSystem\FileUtils.cs" />
-    <Compile Include="Media\FFmpegAdapter.cs" />
-    <Compile Include="Media\IFFmpegAdapter.cs" />
-    <Compile Include="Media\IYoutubeDownloader.cs" />
-    <Compile Include="Media\YoutubeDownloader.cs" />
-    <Compile Include="Media\YoutubeDownloaderException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Repository\IUnitOfWork.cs" />
