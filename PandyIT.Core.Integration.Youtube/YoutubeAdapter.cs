@@ -10,7 +10,7 @@
     using PandyIT.Core.Extensions;
     using YoutubeExtractor;
 
-    public class YoutubeAdapter
+    public class YoutubeAdapter : IYoutubeAdapter
     {
         private readonly YoutubeServiceConfiguration configuration;
         private readonly ILog log;

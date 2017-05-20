@@ -82,6 +82,7 @@
   <ItemGroup>
     <Compile Include="FFmpegAdapter.cs" />
     <Compile Include="IFFmpegAdapter.cs" />
+    <Compile Include="IYoutubeAdapter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="YoutubeAdapter.cs" />
     <Compile Include="YoutubeAdapterConfiguration.cs" />

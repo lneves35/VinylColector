@@ -1,24 +1,25 @@
-﻿using System;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using DiscogsClient;
-using DiscogsClient.Data.Query;
-using log4net;
-using PandyIT.Core.Integration.Discogs.Entities;
-using RestSharpHelper.OAuth1;
-
-namespace PandyIT.VinylOrganizer.BAL.Business.Discogs
+﻿namespace PandyIT.Core.Integration.Discogs
 {
+    using System;
+    using System.Diagnostics;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using DiscogsClient;
+    using DiscogsClient.Data.Query;
+    using log4net;
+    using PandyIT.Core.Integration.Discogs.Entities;
+    using PandyIT.VinylOrganizer.BAL.Business.Discogs;
+    using RestSharpHelper.OAuth1;
+
     public class DiscogsAdapter : IDiscogsAdapter
     {
-        private readonly DiscogsClient.DiscogsClient client;
+        private readonly DiscogsClient client;
 
         private readonly ILog log;
 
         public DiscogsAdapter(OAuthCompleteInformation oAuth, ILog log)
         {
-            this.client = new DiscogsClient.DiscogsClient(oAuth);
+            this.client = new DiscogsClient(oAuth);
             this.log = log;
         }
 

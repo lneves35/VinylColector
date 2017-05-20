@@ -9,6 +9,7 @@ using PandyIT.VinylOrganizer.DAL.Model;
 using System.IO;
 using log4net;
 using log4net.Config;
+using PandyIT.Core.Integration.Discogs;
 using PandyIT.Core.Integration.Youtube;
 using PandyIT.VinylOrganizer.BAL.Business.Discogs;
 using PandyIT.VinylOrganizer.BAL.Business.Harvester;
@@ -21,6 +22,7 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
         private static SqlConnectionStringBuilder sqlConnectionStringBuilder;
         private static ILog log;
         private static IDiscogsAdapter discogsAdapter;
+        private static IYoutubeAdapter youtubeAdapter;
 
         private const string FfmpegPath = @"C:\Program Files (x86)\FFmpeg\ffmpeg.exe";
 
@@ -29,6 +31,7 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
             BootstrapLogger();
             BootstrapConnectionString();
             BootstrapDiscogs();
+            BootstrapYoutube();
         }
 
         private static void BootstrapConnectionString()
@@ -67,22 +70,13 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
 
         private static void Main(string[] args)
         {
-            Bootstrap();
-
-            var youtubeConfiguration = new YoutubeServiceConfiguration()
-            {
-                OutputFolder = new DirectoryInfo(@"C:\YoutubeAudio\output"),
-                WorkingFolder = new DirectoryInfo(@"C:\YoutubeAudio\temp"),
-                ApplicationName = "Vinyl Organizer",
-                FFMpegPath = FfmpegPath,
-                GoogleAPIKey = "AIzaSyCb_j_yNGwAuQqKpPgWt-XSsm8eEhmDhYQ"
-            };
+            Bootstrap();            
 
             using (var ctx = new VinylOrganizerDbContext(sqlConnectionStringBuilder.ToString(), VinylOrganizerSeeder.GetSeeder()))
             using (var uow = new UnitOfWork(ctx))
             {                
                 var vinylOrganizerService = new VinylOrganizerService(uow, discogsAdapter, log);
-                var youtubeService = new YoutubeAdapter(youtubeConfiguration, log);
+                
 
 
                 youtubeService.Search("Free Fire");
@@ -95,6 +89,20 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
                 //GetMP3FromText(youtubeService);
                 //GetTracksFromMixesDbTrackList(harvestingService);
             }
+        }
+
+        private static void BootstrapYoutube()
+        {
+            var youtubeConfiguration = new YoutubeServiceConfiguration()
+            {
+                OutputFolder = new DirectoryInfo(@"C:\YoutubeAudio\output"),
+                WorkingFolder = new DirectoryInfo(@"C:\YoutubeAudio\temp"),
+                ApplicationName = "Vinyl Organizer",
+                FFMpegPath = FfmpegPath,
+                GoogleAPIKey = "AIzaSyCb_j_yNGwAuQqKpPgWt-XSsm8eEhmDhYQ"
+            };
+
+            youtubeAdapter = new YoutubeAdapter(youtubeConfiguration, log);
         }
 
         private static void GetTracksFromMixesDbTrackList(HarvestingService youtubeService)
@@ -143,7 +151,6 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
             var printer = new LabelPrinter(labelPages);
             printer.Print();
         }
-
 
         private static void PrintLabelsByName(VinylOrganizerService businessCtx)
         {
