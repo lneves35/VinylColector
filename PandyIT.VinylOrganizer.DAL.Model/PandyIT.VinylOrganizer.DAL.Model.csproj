@@ -50,10 +50,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\HarvestedMusicTrack.cs" />
+    <Compile Include="Entities\HarvestedTrackList.cs" />
+    <Compile Include="Entities\HarvestingBatch.cs" />
     <Compile Include="Entities\Location.cs" />
     <Compile Include="Entities\LocationVinyl.cs" />
     <Compile Include="Entities\MusicTrack.cs" />
-    <Compile Include="Entities\MusicTrackLocation.cs" />
+    <Compile Include="Entities\MusicTrackInstance.cs" />
     <Compile Include="Entities\Setting.cs" />
     <Compile Include="Interfaces\IVinylOrganizerSeeder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

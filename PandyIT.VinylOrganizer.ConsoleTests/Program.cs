@@ -12,8 +12,9 @@ using log4net.Config;
 using PandyIT.Core.Integration.Discogs;
 using PandyIT.Core.Integration.Youtube;
 using PandyIT.VinylOrganizer.BAL.Business.Discogs;
-using PandyIT.VinylOrganizer.BAL.Business.Harvester;
+using PandyIT.VinylOrganizer.Services;
 using PandyIT.VinylOrganizer.Services.Extractors;
+using PandyIT.VinylOrganizer.Services.Harvesters;
 
 namespace PandyIT.VinylOrganizer.ConsoleTests
 {
@@ -23,7 +24,7 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
         private static ILog log;
         private static IDiscogsAdapter discogsAdapter;
         private static IYoutubeAdapter youtubeAdapter;
-        private static YoutubeHarvester youtubeHarvester;
+        private static IYoutubeHarvester youtubeHarvester;
 
 
         private const string FfmpegPath = @"C:\Program Files (x86)\FFmpeg\ffmpeg.exe";
@@ -80,12 +81,17 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
             {                
                 var vinylOrganizerService = new VinylOrganizerService(uow, discogsAdapter, log);
 
+                var harvestingService = new HarvestingService(uow, youtubeHarvester, log);
+
                 //DownloadYoutubeAudio(youtubeService);
                 //AddVinyls(vinylOrganizerService);
                 //PrintLabelsByDiscogsIds(vinylOrganizerService);
                 //PrintLabelsByName(businessCtx);
                 //GetMP3FromText(youtubeService);
-                GetTracksFromMixesDbTrackList();
+
+
+
+                harvestingService.GetTracksFromMixesDbTrackList(new Uri("https://www.mixesdb.com/w/Category:Craig_Bratley"));
             }
         }
 
@@ -103,17 +109,7 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
             youtubeAdapter = new YoutubeAdapter(youtubeConfiguration, log);
         }
 
-        private static void GetTracksFromMixesDbTrackList()
-        {
-            var extractingService = new TrackListExtractingService(log);
-            extractingService.AddExtractor(new MixesDbTrackListExtractor(log));
-            var trackLists = extractingService.ExtractTrackListsFromUrl(new Uri("https://www.mixesdb.com/w/Category:Craig_Bratley"));
-
-            foreach (var trackList in trackLists)
-            {
-                youtubeHarvester.HarvestMusickTracks(trackList);
-            }
-        }
+        
 
         private static void Print(string msg)
         {

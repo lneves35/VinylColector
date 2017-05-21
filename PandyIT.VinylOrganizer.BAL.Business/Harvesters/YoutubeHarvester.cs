@@ -1,4 +1,4 @@
-﻿namespace PandyIT.VinylOrganizer.BAL.Business.Harvester
+﻿namespace PandyIT.VinylOrganizer.Services.Harvesters
 {
     using System;
     using System.Collections.Generic;
@@ -8,10 +8,10 @@
     using PandyIT.Core.Text;
     using PandyIT.VinylOrganizer.DAL.Model.Entities;
 
-    public class YoutubeHarvester
+    public class YoutubeHarvester : IYoutubeHarvester
     {
-        private IYoutubeAdapter youtubeAdapter;
-        private ILog log;
+        private readonly IYoutubeAdapter youtubeAdapter;
+        private readonly ILog log;
 
         public YoutubeHarvester(IYoutubeAdapter youtubeAdapter, ILog log)
         {
@@ -19,8 +19,9 @@
             this.log = log;
         }
 
-        public void HarvestMusicTrack(MusicTrack musicTrack)
+        public void HarvestMusicTrack(HarvestedMusicTrack musicTrack)
         {
+            musicTrack.Status = "FAILED";
             var infoHarvesting = string.Format("------Harvesting music track: {0} - {1}", musicTrack.Artist, musicTrack.Title);
 			log.Info(infoHarvesting);
 
@@ -55,17 +56,15 @@
 
             if (topMatch != null)
             {
+                musicTrack.Uri = topMatch.Uri;
                 var topMatchInfo = string.Format("---- Top Match {0}: {1}", topMatch.Title, lastDistance);
                 log.Info(topMatchInfo);
-                youtubeAdapter.ExtractMp3(new Uri(topMatch.Uri));
+                var result = youtubeAdapter.ExtractMp3(new Uri(topMatch.Uri));
+                if (!result.HasError)
+                {
+                    musicTrack.Status = "SUCCESS";
+                }
             }
-        }
-
-        public void HarvestMusickTracks(IEnumerable<MusicTrack> musicTracks)
-        {
-            musicTracks
-                .ToList()
-                .ForEach(HarvestMusicTrack);
         }
     }
 }

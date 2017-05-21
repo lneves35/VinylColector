@@ -18,6 +18,7 @@ namespace PandyIT.VinylOrganizer.DAL.Model.Entities
         public int? ParentLocationId { get; set; }
 
         public Location ParentLocation { get; set; }
+
         public ICollection<Location> ChildLocations { get; set; }
 
     }

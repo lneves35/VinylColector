@@ -33,5 +33,11 @@ namespace PandyIT.VinylOrganizer.DAL.Model
         public DbSet<Location> Locations { get; set; }
 
         public DbSet<Setting> Settings { get; set; }
+
+        public DbSet<HarvestedMusicTrack> HarvestedMusicTracks { get; set; }
+
+        public DbSet<HarvestedTrackList> HarvestedTrackLists { get; set; }
+
+        public DbSet<HarvestingBatch> HarvestingBatchs { get; set; }
     }
 }

@@ -111,7 +111,9 @@
     <Compile Include="BaseService.cs" />
     <Compile Include="Extractors\ITrackListExtractor.cs" />
     <Compile Include="Extractors\TrackListExtractingService.cs" />
+    <Compile Include="Harvesters\IYoutubeHarvester.cs" />
     <Compile Include="Harvesters\YoutubeHarvester.cs" />
+    <Compile Include="HarvestingService.cs" />
     <Compile Include="ISettingsService.cs" />
     <Compile Include="IVinylOrganizerService.cs" />
     <Compile Include="Extractors\MixesDbTrackListExtractor.cs" />
