@@ -13,7 +13,7 @@ using PandyIT.Core.Integration.Discogs;
 using PandyIT.Core.Integration.Youtube;
 using PandyIT.VinylOrganizer.BAL.Business.Discogs;
 using PandyIT.VinylOrganizer.BAL.Business.Harvester;
-using PandyIT.VinylOrganizer.Services.MixesDB;
+using PandyIT.VinylOrganizer.Services.Extractors;
 
 namespace PandyIT.VinylOrganizer.ConsoleTests
 {
@@ -105,10 +105,14 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
 
         private static void GetTracksFromMixesDbTrackList()
         {
-            var url = "https://www.mixesdb.com/w/2017-05-19_-_Toddla_T_-_Steel_City,_BBC_Radio_1";
-            var extractor = new MixesDbTrackListExtractor(log);
-            var tracks = extractor.GetTrackList(url);
-            youtubeHarvester.HarvestMusickTracks(tracks);
+            var extractingService = new TrackListExtractingService(log);
+            extractingService.AddExtractor(new MixesDbTrackListExtractor(log));
+            var trackLists = extractingService.ExtractTrackListsFromUrl(new Uri("https://www.mixesdb.com/w/Category:Craig_Bratley"));
+
+            foreach (var trackList in trackLists)
+            {
+                youtubeHarvester.HarvestMusickTracks(trackList);
+            }
         }
 
         private static void Print(string msg)

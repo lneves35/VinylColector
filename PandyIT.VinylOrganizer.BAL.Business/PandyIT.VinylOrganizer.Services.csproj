@@ -109,10 +109,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseService.cs" />
-    <Compile Include="Harvester\YoutubeHarvester.cs" />
+    <Compile Include="Extractors\ITrackListExtractor.cs" />
+    <Compile Include="Extractors\TrackListExtractingService.cs" />
+    <Compile Include="Harvesters\YoutubeHarvester.cs" />
     <Compile Include="ISettingsService.cs" />
     <Compile Include="IVinylOrganizerService.cs" />
-    <Compile Include="MixesDB\MixesDbTrackListExtractor.cs" />
+    <Compile Include="Extractors\MixesDbTrackListExtractor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SettingsService.cs" />
     <Compile Include="VinylOrganizerService.cs" />
