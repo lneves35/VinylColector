@@ -25,9 +25,9 @@ namespace PandyIT.VinylOrganizer.Services.Extractors
             this.extractors.Add(extractor);
         }
 
-        public IEnumerable<IEnumerable<MusicTrack>> ExtractTrackListsFromUrl(Uri baseUri)
+        public IEnumerable<HarvestedTrackList> ExtractTrackListsFromUrl(Uri baseUri)
         {
-            var result = new List<IEnumerable<MusicTrack>>();
+            var result = new List<HarvestedTrackList>();
 
             var rawHtml = new WebClient().DownloadString(baseUri);
             var htmlDoc = new HtmlDocument();
@@ -56,7 +56,6 @@ namespace PandyIT.VinylOrganizer.Services.Extractors
                         var error = string.Format("Error getting tracklist from: {0}{1}{2}", uri.AbsoluteUri, Environment.NewLine, ex.Message);
                         log.Error(ex.Message);
                     }
-
                 }
             }
 

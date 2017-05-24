@@ -34,6 +34,7 @@
             var searchListRequest = youtubeService.Search.List("snippet");
             searchListRequest.Q = text;
             searchListRequest.MaxResults = 10;
+            searchListRequest.Type = "video";
 
             var searchListResponse = searchListRequest.Execute();
             return searchListResponse.Items.Select(i => new YoutubeSearchResult(i));

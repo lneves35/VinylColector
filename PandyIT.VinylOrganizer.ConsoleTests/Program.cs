@@ -91,7 +91,7 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
 
 
 
-                harvestingService.GetTracksFromMixesDbTrackList(new Uri("https://www.mixesdb.com/w/Category:Craig_Bratley"));
+                harvestingService.HarvestTracklists(new Uri("https://www.mixesdb.com/w/Category:Enzo_Siragusa"));
             }
         }
 

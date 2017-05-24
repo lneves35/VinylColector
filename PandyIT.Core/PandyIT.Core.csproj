@@ -92,6 +92,7 @@
     <Compile Include="Repository\IUnitOfWork.cs" />
     <Compile Include="Repository\RemoteRepository.cs" />
     <Compile Include="Repository\UnitOfWork.cs" />
+    <Compile Include="Security\Encryptor.cs" />
     <Compile Include="Text\TextUtils.cs" />
   </ItemGroup>
   <ItemGroup>

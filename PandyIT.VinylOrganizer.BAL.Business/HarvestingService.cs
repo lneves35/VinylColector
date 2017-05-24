@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using log4net;
+using PandyIT.Core.Extensions;
 using PandyIT.Core.Repository;
 using PandyIT.VinylOrganizer.BAL.Business;
 using PandyIT.VinylOrganizer.DAL.Model.Entities;
@@ -35,7 +38,15 @@ namespace PandyIT.VinylOrganizer.Services
             this.unitOfWork.GetRepository<HarvestedMusicTrack>().Add(musickTrack);
         }
 
-        public void GetTracksFromMixesDbTrackList(Uri uri)
+        public HarvestedTrackList FetchHarvestedTrackListByUriHash(string hash)
+        {
+            return this.unitOfWork.GetRepository<HarvestedTrackList>()
+                .Find(htl => htl.UriHash == hash)
+                .SingleOrDefault();
+        }
+
+
+        public void HarvestTracklists(Uri uri)
         {
             var extractingService = new TrackListExtractingService(log);
             extractingService.AddExtractor(new MixesDbTrackListExtractor(log));
@@ -50,25 +61,22 @@ namespace PandyIT.VinylOrganizer.Services
             var trackLists = extractingService.ExtractTrackListsFromUrl(uri);
             foreach (var trackList in trackLists)
             {
-                var harvestedTrackList = new HarvestedTrackList()
-                {
-                    Title = "hello",
-                    Uri = uri.AbsoluteUri,
-                    HarvestingBatchId = harvestingBatch.HarvestingBatchId
-                };
-                this.Add(harvestedTrackList);
+                var alreadyHarvested = (this.FetchHarvestedTrackListByUriHash(trackList.Uri.MD5()) != null);
 
-                foreach (var track in trackList)
+                if (!alreadyHarvested)
                 {
-                    var musicTrack = new HarvestedMusicTrack()
+                    var musicTracks = trackList.HarvestedMusicTracks;
+                    trackList.HarvestingBatchId = harvestingBatch.HarvestingBatchId;
+                    trackList.HarvestedMusicTracks = new List<HarvestedMusicTrack>();
+                    this.Add(trackList);
+
+                    foreach (var track in musicTracks)
                     {
-                        HarvestedTrackListId = harvestedTrackList.HarvestedTrackListId,
-                        Artist = track.Artist,
-                        Title = track.Title,
-                    };
-
-                    youtubeHarvester.HarvestMusicTrack(musicTrack);
-                    this.Add(musicTrack);
+                        track.HarvestedTrackListId = trackList.HarvestedTrackListId;
+                        youtubeHarvester.HarvestMusicTrack(track);
+                        this.Add(track);
+                    }
+                    
                 }
             }
         }

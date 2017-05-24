@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.Eventing.Reader;
-
-namespace PandyIT.VinylOrganizer.Services.Extractors
+﻿namespace PandyIT.VinylOrganizer.Services.Extractors
 {
     using System;
     using System.Collections.Generic;
@@ -20,7 +18,7 @@ namespace PandyIT.VinylOrganizer.Services.Extractors
             this.log = log;
         }
 
-        public IEnumerable<MusicTrack> GetTrackList(Uri url)
+        public HarvestedTrackList GetTrackList(Uri url)
         {
             var rawHtml = new WebClient().DownloadString(url);
             var htmlDoc = new HtmlDocument();
@@ -28,13 +26,13 @@ namespace PandyIT.VinylOrganizer.Services.Extractors
 
             var trackListLines = GetTrackListLines(htmlDoc).ToArray();
 
-            var musicTracks = trackListLines.Select(CreateMusicTrack);
-
-            var parsingInfo = string.Format("-------- Parsed {0} tracks from {1} -------- ", trackListLines.Length, url.AbsoluteUri);
-            log.Info(parsingInfo);
-            //trackListLines.ToList().ForEach(track => this.log.Info(track));
-
-            return musicTracks;
+            return new HarvestedTrackList()
+            {
+                Title = "some title",
+                Uri = url.AbsoluteUri,
+                UriHash = url.AbsoluteUri.MD5(),
+                HarvestedMusicTracks = trackListLines.Select(CreateMusicTrack).ToList()
+            };
         }
 
         public bool CanExtract(Uri uri)
@@ -42,11 +40,11 @@ namespace PandyIT.VinylOrganizer.Services.Extractors
             return uri.Host == "www.mixesdb.com";
         }
 
-        private static MusicTrack CreateMusicTrack(string line)
+        private static HarvestedMusicTrack CreateMusicTrack(string line)
         {
             var entries = line.Split(new []{ '-'}, StringSplitOptions.RemoveEmptyEntries);
 
-            return new MusicTrack()
+            return new HarvestedMusicTrack()
             {
                 Artist = entries[0].Trim(),
                 Title = entries[1].Trim()

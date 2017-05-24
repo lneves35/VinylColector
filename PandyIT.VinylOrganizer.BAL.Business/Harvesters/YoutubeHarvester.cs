@@ -1,8 +1,6 @@
 ﻿namespace PandyIT.VinylOrganizer.Services.Harvesters
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using log4net;
     using PandyIT.Core.Integration.Youtube;
     using PandyIT.Core.Text;
@@ -21,12 +19,12 @@
 
         public void HarvestMusicTrack(HarvestedMusicTrack musicTrack)
         {
-            musicTrack.Status = "FAILED";
+            musicTrack.Status = "Failed";
+
             var infoHarvesting = string.Format("------Harvesting music track: {0} - {1}", musicTrack.Artist, musicTrack.Title);
 			log.Info(infoHarvesting);
 
             var youtubeResults = youtubeAdapter.Search(musicTrack.Artist + " " + musicTrack.Title);
-
 
             YoutubeSearchResult topMatch = null;
             var lastDistance = 1000;
@@ -42,9 +40,7 @@
 
                     var artistDistance = TextUtils.Levenshtein(musicTrack.Artist, youtubeArtist, true);
                     var titleDistance = TextUtils.Levenshtein(musicTrack.Title, youtubeTitle, true);
-                    var totalDistance = artistDistance + titleDistance;
-                    //var matchInfo = string.Format("{0}   {1} - {2} ", totalDistance, youtubeArtist, youtubeTitle);
-                    //log.Info(matchInfo);
+                    var totalDistance = artistDistance + titleDistance;                    
 
 					if (totalDistance < lastDistance)
 					{
