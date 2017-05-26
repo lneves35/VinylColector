@@ -45,7 +45,6 @@ namespace PandyIT.VinylOrganizer.Services
                 .SingleOrDefault();
         }
 
-
         public void HarvestTracklists(Uri uri)
         {
             var extractingService = new TrackListExtractingService(log);

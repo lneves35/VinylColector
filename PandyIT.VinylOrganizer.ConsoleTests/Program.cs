@@ -84,14 +84,12 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
                 var harvestingService = new HarvestingService(uow, youtubeHarvester, log);
 
                 //DownloadYoutubeAudio(youtubeService);
-                //AddVinyls(vinylOrganizerService);
-                //PrintLabelsByDiscogsIds(vinylOrganizerService);
+                AddVinyls(vinylOrganizerService);
+                PrintLabelsByDiscogsIds(vinylOrganizerService);
                 //PrintLabelsByName(businessCtx);
                 //GetMP3FromText(youtubeService);
 
-
-
-                harvestingService.HarvestTracklists(new Uri("https://www.mixesdb.com/w/Category:Enzo_Siragusa"));
+                //harvestingService.HarvestTracklists(new Uri("https://www.mixesdb.com/w/Category:Enzo_Siragusa"));
             }
         }
 
@@ -128,10 +126,7 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
 
             var discogsIdsToPrint = new[]
             {
-                9062623,
-                9062740,
-                10182238,
-                10242315
+                8386406
             };
 
             var i = 0;
@@ -405,19 +400,19 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
                // 6162959,
                // 8763564,
                // 845787,
-                //617743,
-                //6552895,
-                //959848,
-                //648796,
-                //7575662,
-                //9318864,
-                //5204059,
-                //7261405,
-                //9239224,
-                //6440250,
-                //9299432,
-                //9325793,
-                //8714888,
+               // 617743,
+               // 6552895,
+               // 959848,
+               // 648796,
+               // 7575662,
+               // 9318864,
+               // 5204059,
+               // 7261405,
+               // 9239224,
+               // 6440250,
+               // 9299432,
+               // 9325793,
+               // 8714888,
 
 
                // 9340038,
@@ -460,43 +455,51 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
                // 9661301,
                // 9910724,
                // 9150143,
-               // 285065,
-               // 1082542,
-               // 3295037,
-               // 4895692,
-               // 9975547,
-               // 9888163,
-               // 1127486,
-               // 895369,
-               // 491458,
-               // 896306,
-               // 9570574,
-               // 6660733,
-               // 5721517,
-               // 5660407,
+                //285065,
+                //1082542,
+                //3295037,
+                //4895692,
+                //9975547,
+                //9888163,
+                //1127486,
+                //895369,
+                //491458,
+                //896306,
+                //9570574,
+                //6660733,
+                //5721517,
+                //5660407,
 
 
-                7232399,
-                7263677,
-                4879973,
-                5857432,
-                9336919,
-                72657,
-                9151296,
-                7576111,
-                1036091,
-                2757625,
-                3945093,
-                4358240,
-                10201948,
-                7221898,
-                1109580,
-                10177079,
-                10163275,
-                9062623,
-                9062740,
-                10182238,
-                10242315
+                //7232399,
+                //7263677,
+                //4879973,
+                //5857432,
+                //9336919,
+                //72657,
+                //9151296,
+                //7576111,
+                //1036091,
+                //2757625,
+                //3945093,
+                //4358240,
+                //10201948,
+                //7221898,
+                //1109580,
+                //10177079,
+                //10163275,
+                //9062623,
+                //9062740,
+                //10182238,
+                //10242315,
+                //5986449,
+                //606649,
+                //10306595,
+                //10336086,
+                //10301306,
+                //10295877,
+
+                8386406
             };
 
             discogsIds.ToList().ForEach(id => businessCtx.AddDiscogsVinyl(id, 1));

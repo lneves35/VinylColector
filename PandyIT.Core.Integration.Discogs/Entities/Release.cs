@@ -18,8 +18,8 @@ namespace PandyIT.Core.Integration.Discogs.Entities
             var dateString = discogsRelease.released ?? DateTime.MinValue.ToString("yyyy-MM-dd");
             var releaseDate = dateString.Split('-');
             var year = releaseDate[0].Length > 0 ? Convert.ToInt16(releaseDate[0]) : DateTime.MinValue.Year;
-            var month = releaseDate.Length > 1 ? Convert.ToByte(releaseDate[1]) : 1;
-            var day = releaseDate.Length > 2 ? Convert.ToByte(releaseDate[2]) : 1;
+            var month = releaseDate.Length > 1 && Convert.ToByte(releaseDate[1]) != 0 ? Convert.ToByte(releaseDate[1]) : 1;
+            var day = releaseDate.Length > 2 && Convert.ToByte(releaseDate[2])!= 0 ? Convert.ToByte(releaseDate[2]) : 1;
             this.Released = new DateTime(year, month, day);
         }
 
