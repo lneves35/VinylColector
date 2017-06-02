@@ -6,9 +6,15 @@
 
         public int HarvestedTrackListId { get; set; }
 
-        public string Artist { get; set; }
+        public string ArtistSearch { get; set; }
 
-        public string Title { get; set; }
+        public string TitleSearch { get; set; }
+
+        public string ArtistMatch { get; set; }
+
+        public string TitleMatch { get; set; }
+
+        public int? Levenshtein { get; set; }
 
         public string Uri { get; set; }
 

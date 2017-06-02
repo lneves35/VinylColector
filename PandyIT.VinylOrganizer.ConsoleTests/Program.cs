@@ -84,12 +84,12 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
                 var harvestingService = new HarvestingService(uow, youtubeHarvester, log);
 
                 //DownloadYoutubeAudio(youtubeService);
-                AddVinyls(vinylOrganizerService);
-                PrintLabelsByDiscogsIds(vinylOrganizerService);
+                //AddVinyls(vinylOrganizerService);
+                //PrintLabelsByDiscogsIds(vinylOrganizerService);
                 //PrintLabelsByName(businessCtx);
                 //GetMP3FromText(youtubeService);
 
-                //harvestingService.HarvestTracklists(new Uri("https://www.mixesdb.com/w/Category:Enzo_Siragusa"));
+                harvestingService.HarvestTracklists(new Uri("https://www.mixesdb.com/w/Category:Magda"));
             }
         }
 
@@ -126,7 +126,7 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
 
             var discogsIdsToPrint = new[]
             {
-                8386406
+                6316290
             };
 
             var i = 0;
@@ -499,7 +499,8 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
                 //10301306,
                 //10295877,
 
-                8386406
+                //8386406,
+                6316290
             };
 
             discogsIds.ToList().ForEach(id => businessCtx.AddDiscogsVinyl(id, 1));
