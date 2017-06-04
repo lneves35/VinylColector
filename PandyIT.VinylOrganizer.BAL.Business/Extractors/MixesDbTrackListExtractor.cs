@@ -46,8 +46,8 @@
 
             return new HarvestedMusicTrack()
             {
-                Artist = entries[0].Trim(),
-                Title = entries[1].Trim()
+                ArtistSearch = entries[0].Trim(),
+                TitleSearch = entries[1].Trim()
             };
         }
 

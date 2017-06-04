@@ -41,8 +41,8 @@
 
                 if (youtubeEntries.Length == 2)
                 {
-                    var youtubeArtist = youtubeEntries[0];
-                    var youtubeTitle = youtubeEntries[1];
+                    var youtubeArtist = youtubeEntries[0].Trim();
+                    var youtubeTitle = youtubeEntries[1].Trim();
 
                     var artistDistance = TextUtils.Levenshtein(artist, youtubeArtist, true);
                     var titleDistance = TextUtils.Levenshtein(title, youtubeTitle, true);
@@ -60,7 +60,7 @@
             }
 
             if (topMatch != null)
-            {
+            {                
                 musicTrack.Uri = topMatch.Uri;
                 musicTrack.ArtistMatch = matchedArtist;
                 musicTrack.TitleMatch = matchedTitle;
@@ -68,10 +68,19 @@
 
                 var topMatchInfo = string.Format("---- Top Match {0}: {1}", topMatch.Title, bestDistance);
                 log.Info(topMatchInfo);
-                var result = youtubeAdapter.ExtractMp3(new Uri(topMatch.Uri));
-                if (!result.HasError)
+
+                if (bestDistance < 8)
                 {
-                    musicTrack.Status = "SUCCESS";
+                    var result = youtubeAdapter.ExtractMp3(new Uri(topMatch.Uri));
+
+                    if (!result.HasError)
+                    {
+                        musicTrack.Status = "SUCCESS";
+                    }
+                }
+                else
+                {
+                    musicTrack.Status = "DISTANCE CRITERIA NOT MET";
                 }
             }
         }

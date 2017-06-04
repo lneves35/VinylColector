@@ -54,7 +54,7 @@ namespace PandyIT.VinylOrganizer.Services.Extractors
                     catch (Exception ex)
                     {
                         var error = string.Format("Error getting tracklist from: {0}{1}{2}", uri.AbsoluteUri, Environment.NewLine, ex.Message);
-                        log.Error(ex.Message);
+                        log.Error(error);
                     }
                 }
             }
