@@ -83,13 +83,15 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
 
                 var harvestingService = new HarvestingService(uow, youtubeHarvester, log);
 
+                //youtubeAdapter.ExtractMp3(new Uri("https://www.youtube.com/watch?v=CmfLcuz6TIY"));
+
                 //DownloadYoutubeAudio(youtubeService);
-                //AddVinyls(vinylOrganizerService);
-                //PrintLabelsByDiscogsIds(vinylOrganizerService);
+                AddVinyls(vinylOrganizerService);
+                PrintLabelsByDiscogsIds(vinylOrganizerService);
                 //PrintLabelsByName(businessCtx);
                 //GetMP3FromText(youtubeService);
 
-                harvestingService.HarvestTracklists(new Uri("https://www.mixesdb.com/w/Category:Magda"));
+                //harvestingService.HarvestTracklists(new Uri("https://www.mixesdb.com/w/Category:Andrew_Weatherall"));
             }
         }
 
@@ -106,8 +108,6 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
 
             youtubeAdapter = new YoutubeAdapter(youtubeConfiguration, log);
         }
-
-        
 
         private static void Print(string msg)
         {
@@ -126,7 +126,11 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
 
             var discogsIdsToPrint = new[]
             {
-                6316290
+                2364992,
+                8402559,
+                9260973,
+                10464522,
+                10488706
             };
 
             var i = 0;
@@ -500,7 +504,12 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
                 //10295877,
 
                 //8386406,
-                6316290
+                //6316290,
+                2364992,
+                8402559,
+                9260973,
+                10464522,
+                10488706
             };
 
             discogsIds.ToList().ForEach(id => businessCtx.AddDiscogsVinyl(id, 1));
