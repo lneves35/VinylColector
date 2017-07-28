@@ -17,12 +17,12 @@
             this.log = log;
         }
 
-        public void HarvestMusicTrack(HarvestedMusicTrack musicTrack)
+        public void HarvestMusicTrack(HarvestedMusicTrack harvestedMusicTrack)
         {
-            var artist = musicTrack.ArtistSearch;
-            var title = musicTrack.TitleSearch;
+            var artist = harvestedMusicTrack.ArtistSearch;
+            var title = harvestedMusicTrack.TitleSearch;
 
-            musicTrack.Status = "Failed";
+            harvestedMusicTrack.Status = "Failed";
 
             var infoHarvesting = string.Format("------Harvesting music track: {0} - {1}", artist, title);
 			log.Info(infoHarvesting);
@@ -30,7 +30,7 @@
             var youtubeResults = youtubeAdapter.Search(artist + " " + title);
 
             YoutubeSearchResult topMatch = null;
-            var bestDistance = 1000;
+            var bestDistance = int.MaxValue;
 
             string matchedArtist = null;
             string matchedTitle = null;
@@ -59,29 +59,35 @@
                 }
             }
 
-            if (topMatch != null)
-            {                
-                musicTrack.Uri = topMatch.Uri;
-                musicTrack.ArtistMatch = matchedArtist;
-                musicTrack.TitleMatch = matchedTitle;
-                musicTrack.Levenshtein = bestDistance;
+            if (topMatch == null)
+                return;
 
-                var topMatchInfo = string.Format("---- Top Match {0}: {1}", topMatch.Title, bestDistance);
-                log.Info(topMatchInfo);
+            
+            harvestedMusicTrack.Uri = topMatch.Uri;
+            harvestedMusicTrack.ArtistMatch = matchedArtist;
+            harvestedMusicTrack.TitleMatch = matchedTitle;
+            harvestedMusicTrack.Levenshtein = bestDistance;
 
-                if (bestDistance < 8)
+            var topMatchInfo = string.Format("---- Top Match {0}: {1}", topMatch.Title, bestDistance);
+            log.Info(topMatchInfo);
+
+            if (bestDistance < 8)
+            {
+                var result = youtubeAdapter.ExtractMp3(new Uri(topMatch.Uri));
+
+                if (!result.HasError)
                 {
-                    var result = youtubeAdapter.ExtractMp3(new Uri(topMatch.Uri));
-
-                    if (!result.HasError)
-                    {
-                        musicTrack.Status = "SUCCESS";
-                    }
+                    harvestedMusicTrack.Status = "SUCCESS";
+                    harvestedMusicTrack.FilePath = result.FilePath;
                 }
                 else
                 {
-                    musicTrack.Status = "DISTANCE CRITERIA NOT MET";
+                    harvestedMusicTrack.Status = "ERROR: " + result.Error;
                 }
+            }
+            else
+            {
+                harvestedMusicTrack.Status = "DISTANCE CRITERIA NOT MET";
             }
         }
     }

@@ -74,8 +74,12 @@ namespace PandyIT.VinylOrganizer.Services
                         track.HarvestedTrackListId = trackList.HarvestedTrackListId;
                         youtubeHarvester.HarvestMusicTrack(track);
                         this.Add(track);
+
+                        if (track.FilePath != null)
+                        {
+                            //Write ID3 Tag
+                        }
                     }
-                    
                 }
             }
         }

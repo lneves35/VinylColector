@@ -20,6 +20,8 @@
 
         public string Status { get; set; }
 
+        public string FilePath { get; set; }
+
         public HarvestedTrackList HarvestedTrackList { get; set; }
     }
 }

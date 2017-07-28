@@ -4,6 +4,6 @@ namespace PandyIT.VinylOrganizer.Services.Harvesters
 
     public interface IYoutubeHarvester
     {
-        void HarvestMusicTrack(HarvestedMusicTrack musicTrack);
+        void HarvestMusicTrack(HarvestedMusicTrack harvestedMusicTrack);
     }
 }

@@ -75,6 +75,10 @@
       <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="policy.2.0.taglib-sharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=db62eba44689b5b0, processorArchitecture=MSIL">
+      <HintPath>..\packages\taglib.2.1.0.0\lib\policy.2.0.taglib-sharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="RateLimiter, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RateLimiter.1.0.0\lib\net45\RateLimiter.dll</HintPath>
       <Private>True</Private>
@@ -102,6 +106,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml" />
+    <Reference Include="taglib-sharp, Version=2.1.0.0, Culture=neutral, PublicKeyToken=db62eba44689b5b0, processorArchitecture=MSIL">
+      <HintPath>..\packages\taglib.2.1.0.0\lib\taglib-sharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Zlib.Portable, Version=1.11.0.0, Culture=neutral, PublicKeyToken=431cba815f6a8b5b, processorArchitecture=MSIL">
       <HintPath>..\packages\Zlib.Portable.Signed.1.11.0\lib\portable-net4+sl5+wp8+win8+wpa81+MonoTouch+MonoAndroid\Zlib.Portable.dll</HintPath>
       <Private>True</Private>
