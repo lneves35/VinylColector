@@ -77,7 +77,12 @@ namespace PandyIT.VinylOrganizer.Services
 
                         if (track.FilePath != null)
                         {
-                            //Write ID3 Tag
+                            var file = TagLib.File.Create(track.FilePath);
+
+                            file.Tag.Title = track.TitleMatch;
+                            file.Tag.AlbumArtists = new []{ track.ArtistMatch };
+                            file.Tag.Comment = $"Harvested from: {uri}";
+                            file.Save();
                         }
                     }
                 }
