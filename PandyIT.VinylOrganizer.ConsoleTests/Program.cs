@@ -93,17 +93,32 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
 
             using (var ctx = new VinylOrganizerDbContext(sqlConnectionStringBuilder.ToString(), VinylOrganizerSeeder.GetSeeder()))
             using (var uow = new UnitOfWork(ctx))
-            {                
+            {         
+                
                 var vinylOrganizerService = new VinylOrganizerService(uow, discogsAdapter, log);
-
                 var harvestingService = new HarvestingService(uow, youtubeHarvester, log);
 
-                AddVinyls(vinylOrganizerService);
-                PrintLabelsByDiscogsIds(vinylOrganizerService);
+                //AddVinyls(vinylOrganizerService);
+                //PrintLabelsByDiscogsIds(vinylOrganizerService);
+                ConsolePrintTopSimilarities(20);
 
                 //youtubeAdapter.ExtractMp3(new Uri("https://www.youtube.com/watch?v=W8C6Wh_qXFM"));
                 //harvestingService.HarvestTracklists(new Uri("https://www.mixesdb.com/db/index.php?title=Category:Sven_V%C3%A4th&pagefrom=2013-05-17+-+Sven+V%C3%A4th+-+ageHa+Radio+000#mw-pages"));
             }
+        }
+
+        private static void ConsolePrintTopSimilarities(int limit)
+        {
+            var duplicateDetectionService = new DuplicateDetectionService(log);
+            var similarities = duplicateDetectionService.Run(@"\\LNEVES-MYCLOUD\Public\Music\ORGANIZED\SINGLES\_PLAYLIST");
+
+            var topSimilarities = similarities.OrderBy(s => s.SimilarityFilename).Where(s => s.SimilarityFilename >= 0).Take(limit).ToList();
+
+            topSimilarities.ForEach(s =>
+            {
+                var text = string.Format("File1: {0} File2: {1} FilenameLev: {2}", s.File1, s.File2, s.SimilarityFilename);
+                log.Info(text);
+            });
         }
 
         private static void PrintLabelsByDiscogsIds(VinylOrganizerService businessCtx)

@@ -117,6 +117,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseService.cs" />
+    <Compile Include="DuplicateDetectionService.cs" />
     <Compile Include="Extractors\ITrackListExtractor.cs" />
     <Compile Include="Extractors\TrackListExtractingService.cs" />
     <Compile Include="Harvesters\IYoutubeHarvester.cs" />
