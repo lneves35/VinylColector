@@ -103,7 +103,7 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
                 //ConsolePrintTopSimilarities(20);
 
                 //youtubeAdapter.ExtractMp3(new Uri("https://www.youtube.com/watch?v=W8C6Wh_qXFM"));
-                //harvestingService.HarvestTracklists(new Uri("https://www.mixesdb.com/w/Category:The_Martinez_Brothers"));
+                //harvestingService.HarvestTracklists(new Uri("https://www.mixesdb.com/w/Category:Manfredas"));
             }
         }
 
@@ -128,10 +128,11 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
 
             var discogsIdsToPrint = new[]
             {
-                9718837,
-                11154492,
-                11257548,
-                11185498
+                4943254,
+                5480486,
+                11560777,
+                11450669,
+                11542470
             };
 
             var i = 0;
@@ -522,10 +523,24 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
                 //11245580,
                 //11138834,
                 //11126482,
-                9718837,
-                11154492,
-                11257548,
-                11185498
+                //9718837,
+                //11154492,
+                //11257548,
+                //11185498,
+                //10607972,
+                //11379530,
+                //11438210,
+                //6699030,
+                //7557449,
+                //11467146,
+                //11512514,
+                //11494385,
+
+                4943254,
+                5480486,
+                11560777,
+                11450669,
+                11542470
             };
 
 
