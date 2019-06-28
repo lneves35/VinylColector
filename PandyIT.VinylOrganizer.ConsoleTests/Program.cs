@@ -96,9 +96,9 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
             {         
                 
                 var vinylOrganizerService = new VinylOrganizerService(uow, discogsAdapter, log);
-                var harvestingService = new HarvestingService(uow, youtubeHarvester, log);
+                //var harvestingService = new HarvestingService(uow, youtubeHarvester, log);
 
-                AddVinyls(vinylOrganizerService);
+                //AddVinyls(vinylOrganizerService);
                 PrintLabelsByDiscogsIds(vinylOrganizerService);
                 //ConsolePrintTopSimilarities(20);
 
@@ -128,7 +128,7 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
 
             var discogsIdsToPrint = new[]
             {
-                13173994
+                895369
             };
 
             var i = 0;
