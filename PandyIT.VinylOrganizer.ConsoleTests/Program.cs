@@ -98,7 +98,7 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
                 var vinylOrganizerService = new VinylOrganizerService(uow, discogsAdapter, log);
                 //var harvestingService = new HarvestingService(uow, youtubeHarvester, log);
 
-                //AddVinyls(vinylOrganizerService);
+                AddVinyls(vinylOrganizerService);
                 PrintLabelsByDiscogsIds(vinylOrganizerService);
                 //ConsolePrintTopSimilarities(20);
 
@@ -128,7 +128,10 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
 
             var discogsIdsToPrint = new[]
             {
-                895369
+                11664722,
+                11712425,
+                11549302,
+                11810259
             };
 
             var i = 0;
@@ -690,7 +693,21 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
                 //13307074,
                 //13285901,
 
-                13173994
+                //13173994,
+                //7672003,
+                //10306555,
+                //13825777,
+                //12508240,
+                //12357919,
+                //13786548,
+                //13323515,
+                //11125245,
+                //11535897,
+                //11705859,
+                11664722,
+                11712425,
+                11549302,
+                11810259
             };
 
 
