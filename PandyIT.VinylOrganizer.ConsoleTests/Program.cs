@@ -128,7 +128,8 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
 
             var discogsIdsToPrint = new[]
             {
-                14237027
+                14060172,
+                14154765
             };
 
             var i = 0;
@@ -734,7 +735,9 @@ namespace PandyIT.VinylOrganizer.ConsoleTests
                 //14153460,
                 //14190889,
                 //13456044,
-                14237027
+                //14237027,
+                //14060172,
+                14154765
             };
 
 
